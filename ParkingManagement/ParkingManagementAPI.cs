@@ -9,6 +9,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ParkingManagement.DataModels;
 
 namespace ParkingManagement
 {
@@ -22,6 +23,7 @@ namespace ParkingManagement
             _parkingManager = parkingManager;
             _logger = log;
         }
+
 
         [FunctionName("RegisterEntry")]
         [OpenApiOperation(operationId: "RegisterEntry", tags: new[] { "Parking Accesses" })]
@@ -46,6 +48,7 @@ namespace ParkingManagement
             return new OkObjectResult($"Vehicle with license plate: {licensePlate} has just entered the parking.");
         }
 
+
         [FunctionName("RegisterExit")]
         [OpenApiOperation(operationId: "RegisterExit", tags: new[] { "Parking Accesses" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
@@ -59,15 +62,20 @@ namespace ParkingManagement
 
             try
             {
-                await _parkingManager.RegisterExitAsync(licensePlate);
+                var invoice = await _parkingManager.RegisterExitAsync(licensePlate);
+                if (invoice is not null)
+                {
+                    return new OkObjectResult(invoice);
+                }
             }
             catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message);
             }
 
-            return new OkObjectResult($"Vehicle with license plate: {licensePlate} has just exited the parking.");
+            return new OkObjectResult($"Vehicle with license plate: {licensePlate} has just exited the parking. No invoice required.");
         }
+
 
         [FunctionName("RegisterOfficialVehicle")]
         [OpenApiOperation(operationId: "RegisterOfficialVehicle", tags: new[] { "Vehicles Registration" })]
@@ -92,6 +100,7 @@ namespace ParkingManagement
             return new OkObjectResult($"A new official vehicle has just been registered in the system with license plate: {licensePlate}.");
         }
 
+
         [FunctionName("RegisterResidentVehicle")]
         [OpenApiOperation(operationId: "RegisterResidentVehicle", tags: new[] { "Vehicles Registration" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
@@ -115,6 +124,7 @@ namespace ParkingManagement
             return new OkObjectResult($"A new resident vehicle has just been registered in the system with license plate: {licensePlate}.");
         }
 
+
         [FunctionName("Reset")]
         [OpenApiOperation(operationId: "Reset", tags: new[] { "System Reset" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
@@ -127,6 +137,7 @@ namespace ParkingManagement
 
             return new OkObjectResult(responseMessage);
         }
+
 
         [FunctionName("ResidentsPayments")]
         [OpenApiOperation(operationId: "ResidentsPayments", tags: new[] { "Payments" })]
@@ -141,6 +152,7 @@ namespace ParkingManagement
             return new OkObjectResult(payments);
         }
 
+
         [FunctionName("GetAllVehicles")]
         [OpenApiOperation(operationId: "GetAllVehicles", tags: new[] { "Labs" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
@@ -153,6 +165,7 @@ namespace ParkingManagement
 
             return new OkObjectResult(vehicles);
         }
+
 
         [FunctionName("GetVehiclesCount")]
         [OpenApiOperation(operationId: "GetVehiclesCount", tags: new[] { "Labs" })]

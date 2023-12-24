@@ -1,7 +1,9 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using ParkingManagement.Database;
+using ParkingManagement.Providers;
 using ParkingManagement.Repositories;
+using ParkingManagement.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace ParkingManagement
             builder.Services.AddSingleton<IVehicleInParkingRepository, VehicleInParkingRepository>(); // TODO: Check if this can be scope
             builder.Services.AddSingleton<IVehicleStayRepository, VehicleStayRepository>(); // TODO: Check if this can be scope
             builder.Services.AddSingleton<IParkingManager, ParkingManager>(); // TODO: Check if this can be scope
+            builder.Services.AddSingleton<IInvoiceService, InvoiceService>(); // TODO: Check if this can be scope
+            builder.Services.AddSingleton<IParkingRatesProvider, ParkingRatesProvider>(); // TODO: Check if this can be scope
         }
     }
 }

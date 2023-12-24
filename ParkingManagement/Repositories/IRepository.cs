@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Repositories
 {
-    internal interface IRepository<T> : IDisposable
+    public interface IRepository<T> : IDisposable
     {
         Task<T> GetAsync(string id);
 

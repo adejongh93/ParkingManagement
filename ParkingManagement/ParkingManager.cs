@@ -2,6 +2,8 @@
 using ParkingManagement.Database.Models;
 using ParkingManagement.DataModels;
 using ParkingManagement.Repositories;
+using ParkingManagement.Services;
+using ParkingManagement.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +17,18 @@ namespace ParkingManagement
         private readonly IVehicleInParkingRepository vehiclesInParkingRepository;
         private readonly IVehicleStayRepository vehicleStayRepository;
 
+        private readonly IInvoiceService invoiceService;
+
         public ParkingManager(IVehicleRepository vehicleRepository,
             IVehicleInParkingRepository vehicleInParkingRepository,
-            IVehicleStayRepository vehicleStayRepository)
+            IVehicleStayRepository vehicleStayRepository,
+            IInvoiceService invoiceService)
         {
             this.vehicleRepository = vehicleRepository;
             this.vehiclesInParkingRepository = vehicleInParkingRepository;
             this.vehicleStayRepository = vehicleStayRepository;
+
+            this.invoiceService = invoiceService;
         }
 
         public async Task<IEnumerable<Payment>> GenerateResidentsPaymentsAsync()
@@ -39,15 +46,18 @@ namespace ParkingManagement
             residentStays = residentStays.Union(residentsInParking.Select(vehicle => new VehicleStay()
             {
                 LicensePlate = vehicle.LicensePlate,
-                EntryTime = vehicle.EntryTime,
-                ExitTime = DateTime.UtcNow
+                TimeRange = new VehicleStayTimeRange()
+                {
+                    EntryTime = vehicle.EntryTime,
+                    ExitTime = DateTime.UtcNow
+                }
             }));
 
             var groups = residentStays.GroupBy(vehicle => vehicle.LicensePlate);
 
             return groups.Select(group =>
             {
-                var timeInParking = (int)group.Sum(stay => stay.ExitTime.Subtract(stay.EntryTime).TotalMinutes);
+                var timeInParking = (int)group.Sum(vehicleStay => vehicleStay.TimeRange.ExitTime.Subtract(vehicleStay.TimeRange.EntryTime).TotalMinutes);
                 var totalToPay = Math.Round(timeInParking * 0.05, 2);
                 return new Payment()
                 {
@@ -72,7 +82,8 @@ namespace ParkingManagement
         {
             if (!await vehicleRepository.ExistsAsync(licensePlate))
             {
-                throw new InvalidOperationException($"Vehicle with license plate {licensePlate} is not registered in the system.");
+                // Vehicle is not registered in the system. It will be registered as Default
+                await RegisterDefaultVehicleAsync(licensePlate);
             }
 
             if (await vehiclesInParkingRepository.ExistsAsync(licensePlate))
@@ -87,7 +98,7 @@ namespace ParkingManagement
             });
         }
 
-        public async Task RegisterExitAsync(string licensePlate)
+        public async Task<Invoice> RegisterExitAsync(string licensePlate)
         {
             if (!await vehicleRepository.ExistsAsync(licensePlate))
             {
@@ -101,14 +112,31 @@ namespace ParkingManagement
 
             var vehicle = await vehiclesInParkingRepository.GetAsync(licensePlate);
 
+            var entryTime = vehicle.EntryTime;
+            var exitTime = DateTime.UtcNow;
+
+            var timeRange = new VehicleStayTimeRange()
+            {
+                EntryTime = entryTime,
+                ExitTime = exitTime
+            };
+
             await vehicleStayRepository.AddAsync(new VehicleStay()
             {
                 LicensePlate = licensePlate,
-                EntryTime = vehicle.EntryTime,
-                ExitTime = DateTime.UtcNow
+                TimeRange = timeRange
             });
 
             await vehiclesInParkingRepository.RemoveAsync(vehicle);
+
+            var vehicleType = (await vehicleRepository.GetAsync(licensePlate)).Type;
+
+            if (vehicleType is VehicleType.Default)
+            {
+                return GenerateInvoice(licensePlate, vehicleType, timeRange);
+
+            }
+            return null;
         }
 
         public async Task RegisterOfficialVehicleAsync(string licensePlate)
@@ -122,6 +150,9 @@ namespace ParkingManagement
             throw new NotImplementedException();
         }
 
+        private async Task RegisterDefaultVehicleAsync(string licensePlate)
+            => await RegisterVehicleAsync(licensePlate, VehicleType.Default);
+
         private async Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType)
         {
             if (await vehicleRepository.ExistsAsync(licensePlate))
@@ -133,6 +164,16 @@ namespace ParkingManagement
             {
                 LicensePlate = licensePlate,
                 Type = vehicleType
+            });
+        }
+
+        private Invoice GenerateInvoice(string licensePlate, VehicleType vehicleType, VehicleStayTimeRange timeRange)
+        {
+            return invoiceService.GenerateInvoice(new InvoiceCreationData()
+            {
+                LicensePlate = licensePlate,
+                VehicleType = vehicleType,
+                StaysTimeRanges = new List<VehicleStayTimeRange>() { timeRange }
             });
         }
     }

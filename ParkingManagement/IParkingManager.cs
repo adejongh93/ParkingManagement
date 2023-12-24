@@ -18,7 +18,7 @@ namespace ParkingManagement
 
         public Task RegisterEntryAsync(string licensePlate);
 
-        public Task RegisterExitAsync(string licensePlate);
+        public Task<Invoice> RegisterExitAsync(string licensePlate);
 
         public Task RegisterOfficialVehicleAsync(string licensePlate);
 

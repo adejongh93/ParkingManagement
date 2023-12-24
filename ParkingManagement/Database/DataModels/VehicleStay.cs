@@ -8,8 +8,6 @@ namespace ParkingManagement.Database.DataModels
         [Key]
         public string LicensePlate { get; set; }
 
-        public DateTime EntryTime { get; set; }
-
-        public DateTime ExitTime { get; set; }
+        public VehicleStayTimeRange TimeRange { get; set; }
     }
 }
