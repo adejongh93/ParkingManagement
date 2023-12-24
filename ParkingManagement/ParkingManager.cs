@@ -31,7 +31,7 @@ namespace ParkingManagement
             this.invoiceService = invoiceService;
         }
 
-        public async Task<IEnumerable<Payment>> GenerateResidentsPaymentsAsync()
+        public async Task<IEnumerable<Invoice>> GenerateResidentsPaymentsAsync()
         {
             var residentsLicensePlates = (await vehicleRepository.GetAllAsync())
                 .Where(vehicle => vehicle.Type == VehicleType.Resident)
@@ -55,17 +55,16 @@ namespace ParkingManagement
 
             var groups = residentStays.GroupBy(vehicle => vehicle.LicensePlate);
 
-            return groups.Select(group =>
+            return groups.Select(group => invoiceService.GenerateInvoice(new InvoiceCreationData()
             {
-                var timeInParking = (int)group.Sum(vehicleStay => vehicleStay.TimeRange.ExitTime.Subtract(vehicleStay.TimeRange.EntryTime).TotalMinutes);
-                var totalToPay = Math.Round(timeInParking * 0.05, 2);
-                return new Payment()
+                LicensePlate = group.Key,
+                VehicleType = VehicleType.Resident,
+                StaysTimeRanges = group.Select(stay => new VehicleStayTimeRange()
                 {
-                    LicensePlate = group.Key,
-                    TimeInParking = timeInParking,
-                    TotalToPay = totalToPay
-                };
-            });
+                    EntryTime = stay.TimeRange.EntryTime,
+                    ExitTime = stay.TimeRange.ExitTime
+                })
+            }));
         }
 
         public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()

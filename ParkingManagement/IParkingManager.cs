@@ -10,7 +10,7 @@ namespace ParkingManagement
 {
     public interface IParkingManager
     {
-        public Task<IEnumerable<Payment>> GenerateResidentsPaymentsAsync();
+        public Task<IEnumerable<Invoice>> GenerateResidentsPaymentsAsync();
 
         public Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 
