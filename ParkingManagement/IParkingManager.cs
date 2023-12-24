@@ -1,4 +1,5 @@
 ﻿using ParkingManagement.Database.Models;
+using ParkingManagement.DataModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace ParkingManagement
 {
     public interface IParkingManager
     {
-        public Task GenerateResidentsPaymentsAsync();
+        public Task<IEnumerable<Payment>> GenerateResidentsPaymentsAsync();
 
         public Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 

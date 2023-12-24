@@ -1,8 +1,10 @@
 ﻿using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Models;
+using ParkingManagement.DataModels;
 using ParkingManagement.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ParkingManagement
@@ -22,9 +24,38 @@ namespace ParkingManagement
             this.vehicleStayRepository = vehicleStayRepository;
         }
 
-        public Task GenerateResidentsPaymentsAsync()
+        public async Task<IEnumerable<Payment>> GenerateResidentsPaymentsAsync()
         {
-            throw new NotImplementedException();
+            var residentsLicensePlates = (await vehicleRepository.GetAllAsync())
+                .Where(vehicle => vehicle.Type == VehicleType.Resident)
+                .Select(vehicle => vehicle.LicensePlate).ToList();
+
+            var stays = (await vehicleStayRepository.GetAllAsync()).ToList();
+            var residentStays = stays.Where(stay => residentsLicensePlates.Contains(stay.LicensePlate));
+
+            var vehiclesInParking = (await vehiclesInParkingRepository.GetAllAsync()).ToList();
+            var residentsInParking = vehiclesInParking.Where(vehicle => residentsLicensePlates.Contains(vehicle.LicensePlate)).ToList();
+
+            residentStays = residentStays.Union(residentsInParking.Select(vehicle => new VehicleStay()
+            {
+                LicensePlate = vehicle.LicensePlate,
+                EntryTime = vehicle.EntryTime,
+                ExitTime = DateTime.UtcNow
+            }));
+
+            var groups = residentStays.GroupBy(vehicle => vehicle.LicensePlate);
+
+            return groups.Select(group =>
+            {
+                var timeInParking = (int)group.Sum(stay => stay.ExitTime.Subtract(stay.EntryTime).TotalMinutes);
+                var totalToPay = Math.Round(timeInParking * 0.05, 2);
+                return new Payment()
+                {
+                    LicensePlate = group.Key,
+                    TimeInParking = timeInParking,
+                    TotalToPay = totalToPay
+                };
+            });
         }
 
         public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()
@@ -81,7 +112,7 @@ namespace ParkingManagement
         }
 
         public async Task RegisterOfficialVehicleAsync(string licensePlate)
-            =>  await RegisterVehicleAsync(licensePlate, VehicleType.Official);
+            => await RegisterVehicleAsync(licensePlate, VehicleType.Official);
 
         public async Task RegisterResidentVehicleAsync(string licensePlate)
             => await RegisterVehicleAsync(licensePlate, VehicleType.Resident);

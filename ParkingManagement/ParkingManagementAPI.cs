@@ -131,14 +131,14 @@ namespace ParkingManagement
         [FunctionName("ResidentsPayments")]
         [OpenApiOperation(operationId: "ResidentsPayments", tags: new[] { "Payments" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public IActionResult ResidentsPaymentsAsync(
+        public async Task<IActionResult> ResidentsPaymentsAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            string responseMessage = "Generating payment data for residents...";
+            var payments = await _parkingManager.GenerateResidentsPaymentsAsync();
 
-            return new OkObjectResult(responseMessage);
+            return new OkObjectResult(payments);
         }
 
         [FunctionName("GetAllVehicles")]

@@ -34,9 +34,9 @@ namespace ParkingManagement.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<VehicleStay>> GetAllAsync()
+        public async Task<IEnumerable<VehicleStay>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _dbContext.VehiclesStay.ToListAsync();
         }
 
         public Task<VehicleStay> GetAsync(string id)
