@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Database.Models
 {
-    public record VehicleDataModel()
+    public record Vehicle()
     {
         [Key]
         public string LicensePlate { get; set; }
 
-        public VehicleTypeDataModel Type { get; set; }
+        public VehicleType Type { get; set; }
     }
 }

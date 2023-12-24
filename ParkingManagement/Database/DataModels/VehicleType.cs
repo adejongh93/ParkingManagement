@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Database.Models
 {
-    public enum VehicleTypeDataModel
+    public enum VehicleType
     {
         Default,
         Official,

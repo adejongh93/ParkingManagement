@@ -18,6 +18,8 @@ namespace ParkingManagement
         {
             builder.Services.AddDbContext<IParkingManagementDbContext, ParkingManagementDbContext>(ServiceLifetime.Singleton, ServiceLifetime.Singleton);
             builder.Services.AddSingleton<IVehicleRepository, VehicleRepository>(); // TODO: Check if this can be scope
+            builder.Services.AddSingleton<IVehicleInParkingRepository, VehicleInParkingRepository>(); // TODO: Check if this can be scope
+            builder.Services.AddSingleton<IVehicleStayRepository, VehicleStayRepository>(); // TODO: Check if this can be scope
             builder.Services.AddSingleton<IParkingManager, ParkingManager>(); // TODO: Check if this can be scope
         }
     }

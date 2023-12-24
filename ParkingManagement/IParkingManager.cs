@@ -11,17 +11,17 @@ namespace ParkingManagement
     {
         public Task GenerateResidentsPaymentsAsync();
 
-        public Task<IEnumerable<VehicleDataModel>> GetAllVehiclesAsync();
+        public Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 
         public Task<int> GetVehiclesCountAsync();
 
-        public Task RegisterEntryAsync();
+        public Task RegisterEntryAsync(string licensePlate);
 
-        public Task RegisterExitAsync();
+        public Task RegisterExitAsync(string licensePlate);
 
-        public Task<bool> TryRegisterOfficialVehicleAsync(string licensePlate);
+        public Task RegisterOfficialVehicleAsync(string licensePlate);
 
-        public Task<bool> TryRegisterResidentVehicleAsync(string licensePlate);
+        public Task RegisterResidentVehicleAsync(string licensePlate);
 
         public Task ResetAsync();
     }

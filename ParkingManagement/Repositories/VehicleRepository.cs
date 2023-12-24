@@ -17,17 +17,10 @@ namespace ParkingManagement.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task<bool> TryAddAsync(VehicleDataModel newVehicle)
+        public async Task AddAsync(Vehicle newVehicle)
         {
-            if (await VehicleExists(newVehicle.LicensePlate))
-            {
-                return false;
-            }
-
             await _dbContext.Vehicles.AddAsync(newVehicle); // I don't think we need to worry a lot about concurrency in this application
             await _dbContext.SaveChangesAsync();
-
-            return true;
         }
 
         public void Dispose()
@@ -35,7 +28,7 @@ namespace ParkingManagement.Repositories
             _dbContext.Dispose();
         }
 
-        public async Task<IEnumerable<VehicleDataModel>> GetAllAsync()
+        public async Task<IEnumerable<Vehicle>> GetAllAsync()
         {
             return await _dbContext.Vehicles.ToListAsync();
         }
@@ -45,12 +38,15 @@ namespace ParkingManagement.Repositories
             return await _dbContext.Vehicles.CountAsync();
         }
 
-        public Task<VehicleDataModel> GetAsync(int id)
+        public async Task<Vehicle> GetAsync(string id)
+            => await _dbContext.Vehicles.FindAsync(id);
+
+        public async Task<bool> ExistsAsync(string id)
+            => await GetAsync(id) is not null;
+
+        public Task RemoveAsync(Vehicle entity)
         {
             throw new NotImplementedException();
         }
-
-        private async Task<bool> VehicleExists(string licensePlate)
-            => await _dbContext.Vehicles.AnyAsync(vehicle => vehicle.LicensePlate == licensePlate);
     }
 }

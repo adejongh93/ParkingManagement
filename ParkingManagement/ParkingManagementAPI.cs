@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -26,46 +27,66 @@ namespace ParkingManagement
         [OpenApiOperation(operationId: "RegisterEntry", tags: new[] { "Parking Accesses" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public IActionResult RegisterEntry(
+        public async Task<IActionResult> RegisterEntryAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             string licensePlate = req.Query["licensePlate"];
-            string responseMessage = $"A vehicle has just entered the parking with license plate: {licensePlate}.";
 
-            return new OkObjectResult(responseMessage);
+            try
+            {
+                await _parkingManager.RegisterEntryAsync(licensePlate);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+
+            return new OkObjectResult($"Vehicle with license plate: {licensePlate} has just entered the parking.");
         }
 
         [FunctionName("RegisterExit")]
         [OpenApiOperation(operationId: "RegisterExit", tags: new[] { "Parking Accesses" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public IActionResult RegisterExit(
+        public async Task<IActionResult> RegisterExitAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             string licensePlate = req.Query["licensePlate"];
-            string responseMessage = $"A vehicle has just exited the parking with license plate: {licensePlate}.";
 
-            return new OkObjectResult(responseMessage);
+            try
+            {
+                await _parkingManager.RegisterExitAsync(licensePlate);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
+            }
+
+            return new OkObjectResult($"Vehicle with license plate: {licensePlate} has just exited the parking.");
         }
 
         [FunctionName("RegisterOfficialVehicle")]
         [OpenApiOperation(operationId: "RegisterOfficialVehicle", tags: new[] { "Vehicles Registration" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public async Task<IActionResult> RegisterOfficialVehicle(
+        public async Task<IActionResult> RegisterOfficialVehicleAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             string licensePlate = req.Query["licensePlate"];
 
-            if (!await _parkingManager.TryRegisterOfficialVehicleAsync(licensePlate))
+            try
             {
-                return new ConflictObjectResult($"A vehicle with license plate: {licensePlate} already exists on the system.");
+                await _parkingManager.RegisterOfficialVehicleAsync(licensePlate);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
             }
 
             return new OkObjectResult($"A new official vehicle has just been registered in the system with license plate: {licensePlate}.");
@@ -75,16 +96,20 @@ namespace ParkingManagement
         [OpenApiOperation(operationId: "RegisterResidentVehicle", tags: new[] { "Vehicles Registration" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public async Task<IActionResult> RegisterResidentVehicle(
+        public async Task<IActionResult> RegisterResidentVehicleAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             string licensePlate = req.Query["licensePlate"];
 
-            if (!await _parkingManager.TryRegisterResidentVehicleAsync(licensePlate))
+            try
             {
-                return new ConflictObjectResult($"A vehicle with license plate: {licensePlate} already exists on the system.");
+                await _parkingManager.RegisterResidentVehicleAsync(licensePlate);
+            }
+            catch (Exception ex)
+            {
+                return new BadRequestObjectResult(ex.Message);
             }
 
             return new OkObjectResult($"A new resident vehicle has just been registered in the system with license plate: {licensePlate}.");
@@ -93,7 +118,7 @@ namespace ParkingManagement
         [FunctionName("Reset")]
         [OpenApiOperation(operationId: "Reset", tags: new[] { "System Reset" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public IActionResult Reset(
+        public IActionResult ResetAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -106,7 +131,7 @@ namespace ParkingManagement
         [FunctionName("ResidentsPayments")]
         [OpenApiOperation(operationId: "ResidentsPayments", tags: new[] { "Payments" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public IActionResult ResidentsPayments(
+        public IActionResult ResidentsPaymentsAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -119,7 +144,7 @@ namespace ParkingManagement
         [FunctionName("GetAllVehicles")]
         [OpenApiOperation(operationId: "GetAllVehicles", tags: new[] { "Labs" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public async Task<IActionResult> GetAllVehicles(
+        public async Task<IActionResult> GetAllVehiclesAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -132,7 +157,7 @@ namespace ParkingManagement
         [FunctionName("GetVehiclesCount")]
         [OpenApiOperation(operationId: "GetVehiclesCount", tags: new[] { "Labs" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public async Task<IActionResult> GetVehiclesCount(
+        public async Task<IActionResult> GetVehiclesCountAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
