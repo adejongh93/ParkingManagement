@@ -21,6 +21,7 @@ namespace ParkingManagement.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseInMemoryDatabase(databaseName: "ParkingManagement");
+            optionsBuilder.EnableSensitiveDataLogging();
         }
     }
 }

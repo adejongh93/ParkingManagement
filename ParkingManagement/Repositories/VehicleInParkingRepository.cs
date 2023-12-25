@@ -51,5 +51,16 @@ namespace ParkingManagement.Repositories
             _dbContext.VehiclesInParking.Remove(vehicle); // I don't think we need to worry a lot about concurrency in this application
             await _dbContext.SaveChangesAsync();
         }
+
+        public Task Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateRangeAsync(IEnumerable<VehicleInParking> entities)
+        {
+            _dbContext.VehiclesInParking.UpdateRange(entities);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }

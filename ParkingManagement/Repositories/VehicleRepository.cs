@@ -48,5 +48,15 @@ namespace ParkingManagement.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public Task Clear()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateRangeAsync(IEnumerable<Vehicle> entities)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

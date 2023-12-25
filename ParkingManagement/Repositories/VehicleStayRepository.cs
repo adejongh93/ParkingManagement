@@ -24,6 +24,12 @@ namespace ParkingManagement.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task Clear()
+        {
+            _dbContext.VehiclesStay.RemoveRange(_dbContext.VehiclesStay);
+            await _dbContext.SaveChangesAsync();
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();
@@ -50,6 +56,11 @@ namespace ParkingManagement.Repositories
         }
 
         public Task RemoveAsync(VehicleStay entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateRangeAsync(IEnumerable<VehicleStay> entities)
         {
             throw new NotImplementedException();
         }

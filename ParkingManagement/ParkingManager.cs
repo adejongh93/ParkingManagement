@@ -144,9 +144,18 @@ namespace ParkingManagement
         public async Task RegisterResidentVehicleAsync(string licensePlate)
             => await RegisterVehicleAsync(licensePlate, VehicleType.Resident);
 
-        public Task ResetAsync()
+        public async Task ResetAsync()
         {
-            throw new NotImplementedException();
+            await vehicleStayRepository.Clear();
+
+            var vehiclesInParking = await vehiclesInParkingRepository.GetAllAsync();
+            vehiclesInParking = vehiclesInParking.Select(vehicle =>
+            {
+                vehicle.EntryTime = DateTime.UtcNow;
+                return vehicle;
+            });
+
+            await vehiclesInParkingRepository.UpdateRangeAsync(vehiclesInParking);
         }
 
         private async Task RegisterDefaultVehicleAsync(string licensePlate)
@@ -174,6 +183,16 @@ namespace ParkingManagement
                 VehicleType = vehicleType,
                 StaysTimeRanges = new List<VehicleStayTimeRange>() { timeRange }
             });
+        }
+
+        public async Task<IEnumerable<VehicleInParking>> GetAllVehiclesInParkingAsync()
+        {
+            return await vehiclesInParkingRepository.GetAllAsync();
+        }
+
+        public async Task<IEnumerable<VehicleStay>> GetAllVehiclesStayAsync()
+        {
+            return await vehicleStayRepository.GetAllAsync();
         }
     }
 }

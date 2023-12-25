@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ParkingManagement.Database.DataModels;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -17,5 +18,9 @@ namespace ParkingManagement.Repositories
         Task<bool> ExistsAsync(string id);
 
         Task RemoveAsync(T entity);
+
+        Task Clear();
+
+        Task UpdateRangeAsync(IEnumerable<T> entities);
     }
 }

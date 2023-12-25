@@ -1,4 +1,5 @@
-﻿using ParkingManagement.Database.Models;
+﻿using ParkingManagement.Database.DataModels;
+using ParkingManagement.Database.Models;
 using ParkingManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -10,20 +11,24 @@ namespace ParkingManagement
 {
     public interface IParkingManager
     {
-        public Task<IEnumerable<Invoice>> GenerateResidentsPaymentsAsync();
+        Task<IEnumerable<Invoice>> GenerateResidentsPaymentsAsync();
 
-        public Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
+        Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 
-        public Task<int> GetVehiclesCountAsync();
+        Task<IEnumerable<VehicleInParking>> GetAllVehiclesInParkingAsync();
 
-        public Task RegisterEntryAsync(string licensePlate);
+        Task<IEnumerable<VehicleStay>> GetAllVehiclesStayAsync();
 
-        public Task<Invoice> RegisterExitAsync(string licensePlate);
+        Task<int> GetVehiclesCountAsync();
 
-        public Task RegisterOfficialVehicleAsync(string licensePlate);
+        Task RegisterEntryAsync(string licensePlate);
 
-        public Task RegisterResidentVehicleAsync(string licensePlate);
+        Task<Invoice> RegisterExitAsync(string licensePlate);
 
-        public Task ResetAsync();
+        Task RegisterOfficialVehicleAsync(string licensePlate);
+
+        Task RegisterResidentVehicleAsync(string licensePlate);
+
+        Task ResetAsync();
     }
 }

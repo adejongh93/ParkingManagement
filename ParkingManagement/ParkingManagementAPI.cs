@@ -128,14 +128,14 @@ namespace ParkingManagement
         [FunctionName("Reset")]
         [OpenApiOperation(operationId: "Reset", tags: new[] { "System Reset" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public IActionResult ResetAsync(
+        public async Task<IActionResult> ResetAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            string responseMessage = "A new month has just started. All accesses and counters have been reset.";
-
-            return new OkObjectResult(responseMessage);
+            await _parkingManager.ResetAsync();
+                    
+            return new OkObjectResult("A new month has just started. All accesses and counters have been reset.");
         }
 
 
@@ -164,6 +164,34 @@ namespace ParkingManagement
             var vehicles = await _parkingManager.GetAllVehiclesAsync();
 
             return new OkObjectResult(vehicles);
+        }
+
+
+        [FunctionName("GetAllVehiclesInParking")]
+        [OpenApiOperation(operationId: "GetAllVehiclesInParking", tags: new[] { "Labs" })]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
+        public async Task<IActionResult> GetAllVehiclesInParkingAsync(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+            var vehiclesInParking = await _parkingManager.GetAllVehiclesInParkingAsync();
+
+            return new OkObjectResult(vehiclesInParking);
+        }
+
+
+        [FunctionName("GetAllVehiclesStays")]
+        [OpenApiOperation(operationId: "GetAllVehiclesStays", tags: new[] { "Labs" })]
+        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
+        public async Task<IActionResult> GetAllVehiclesStaysAsync(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
+        {
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
+
+            var vehiclesInParking = await _parkingManager.GetAllVehiclesStayAsync();
+
+            return new OkObjectResult(vehiclesInParking);
         }
 
 

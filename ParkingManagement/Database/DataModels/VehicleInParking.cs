@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ParkingManagement.Database.DataModels
 {
-    internal class VehicleInParking
+    public record VehicleInParking
     {
         [Key]
         public string LicensePlate { get; set; }
