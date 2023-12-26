@@ -122,50 +122,6 @@ namespace ParkingManagement
         }
 
 
-        [FunctionName("RegisterOfficialVehicle")]
-        [OpenApiOperation(operationId: "RegisterOfficialVehicle", tags: new[] { "Labs" })]
-        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public async Task<IActionResult> RegisterOfficialVehicleAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
-        {
-            var licensePlate = req.Query["licensePlate"];
-
-            try
-            {
-                await parkingManager.RegisterOfficialVehicleAsync(licensePlate);
-            }
-            catch (Exception ex)
-            {
-                return new BadRequestObjectResult(ex.Message);
-            }
-
-            return new OkObjectResult($"A new official vehicle has just been registered in the system with license plate: {licensePlate}.");
-        }
-
-
-        [FunctionName("RegisterResidentVehicle")]
-        [OpenApiOperation(operationId: "RegisterResidentVehicle", tags: new[] { "Labs" })]
-        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
-        [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public async Task<IActionResult> RegisterResidentVehicleAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
-        {
-            var licensePlate = req.Query["licensePlate"];
-
-            try
-            {
-                await parkingManager.RegisterResidentVehicleAsync(licensePlate);
-            }
-            catch (Exception ex)
-            {
-                return new BadRequestObjectResult(ex.Message);
-            }
-
-            return new OkObjectResult($"A new resident vehicle has just been registered in the system with license plate: {licensePlate}.");
-        }
-
-
         [FunctionName("GetAllVehicles")]
         [OpenApiOperation(operationId: "GetAllVehicles", tags: new[] { "Labs" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]

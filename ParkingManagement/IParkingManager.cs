@@ -2,10 +2,7 @@
 using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Models;
 using ParkingManagement.DataModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ParkingManagement
@@ -25,10 +22,6 @@ namespace ParkingManagement
         Task RegisterEntryAsync(string licensePlate);
 
         Task<StayInvoice> RegisterExitAsync(string licensePlate);
-
-        Task RegisterOfficialVehicleAsync(string licensePlate);
-
-        Task RegisterResidentVehicleAsync(string licensePlate);
 
         Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType);
 

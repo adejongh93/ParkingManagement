@@ -82,12 +82,6 @@ namespace ParkingManagement
             return await GenerateInvoiceIfApplicableAsync(licensePlate, vehicleStay.TimeRange);
         }
 
-        public async Task RegisterOfficialVehicleAsync(string licensePlate)
-            => await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.OFFICIAL);
-
-        public async Task RegisterResidentVehicleAsync(string licensePlate)
-            => await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.RESIDENT);
-
         public async Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType)
         {
             await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, vehicleType);
