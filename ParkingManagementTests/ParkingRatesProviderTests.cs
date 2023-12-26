@@ -18,7 +18,7 @@ namespace ParkingManagementTests
             var rate = parkingRatesProvider.GetRateByVehicleType(vehicleType);
 
             // Assert
-            rate.Equals(expectedRate);
+            Assert.Equal(expectedRate, rate);
         }
     }
 }
