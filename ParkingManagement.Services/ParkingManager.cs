@@ -19,12 +19,11 @@ namespace ParkingManagement
 {
     public class ParkingManager : IParkingManager
     {
-        private readonly IValidationsService valitationsService;
-
         private readonly IVehiclesProvider vehicleProvider;
         private readonly IVehicleStaysProvider vehicleStaysProvider;
         private readonly IVehiclesInParkingProvider vehiclesInParkingProvider;
 
+        private readonly IValidationsService valitationsService;
         private readonly IVehicleRegistrationService vehicleRegistrationService;
         private readonly IParkingAccessService parkingAccessService;
         private readonly IVehicleStaysService vehicleStaysService;

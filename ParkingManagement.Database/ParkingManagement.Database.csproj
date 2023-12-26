@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -13,10 +13,6 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.25" />
 		<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
 		<PackageReference Include="OfficeOpenXml.Core.ExcelPackage" Version="1.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="..\ParkingManagement.Database\ParkingManagement.Database.csproj" />
 	</ItemGroup>
 
 </Project>
