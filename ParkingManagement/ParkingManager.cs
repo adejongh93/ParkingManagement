@@ -11,6 +11,7 @@ using ParkingManagement.Services.Models;
 using ParkingManagement.Services.ParkingAccess;
 using ParkingManagement.Services.SystemReset;
 using ParkingManagement.Services.SystemReset.DataModels;
+using ParkingManagement.Services.Validations;
 using ParkingManagement.Services.VehicleRegistration;
 using ParkingManagement.Services.VehicleStays;
 using System;
@@ -21,6 +22,8 @@ namespace ParkingManagement
 {
     internal class ParkingManager : IParkingManager
     {
+        private readonly IValidationsService valitationsService;
+
         private readonly IVehiclesProvider vehicleProvider;
         private readonly IVehicleStaysProvider vehicleStaysProvider;
         private readonly IVehiclesInParkingProvider vehiclesInParkingProvider;
@@ -32,7 +35,8 @@ namespace ParkingManagement
         private readonly IResetService resetService;
         private readonly IFileManagementService fileManagementService;
 
-        public ParkingManager(IVehicleRegistrationService vehicleRegistrationService,
+        public ParkingManager(IValidationsService valitationsService,
+            IVehicleRegistrationService vehicleRegistrationService,
             IParkingAccessService parkingAccessService,
             IVehicleStaysService vehicleStaysService,
             IVehiclesProvider vehicleProvider,
@@ -42,6 +46,7 @@ namespace ParkingManagement
             IResetService resetService,
             IFileManagementService fileManagementService)
         {
+            this.valitationsService = valitationsService;
             this.vehicleRegistrationService = vehicleRegistrationService;
             this.parkingAccessService = parkingAccessService;
             this.vehicleStaysService = vehicleStaysService;
@@ -71,11 +76,14 @@ namespace ParkingManagement
 
         public async Task RegisterEntryAsync(string licensePlate)
         {
+            ValidateLicensePlate(licensePlate);
             await parkingAccessService.RegisterVehicleEntryAsync(licensePlate);
         }
 
         public async Task<StayInvoice> RegisterExitAsync(string licensePlate)
         {
+            ValidateLicensePlate(licensePlate);
+
             var vehicleStay = await parkingAccessService.RegisterVehicleExitAsync(licensePlate);
 
             await vehicleStaysService.AddVehicleStayAsync(vehicleStay);
@@ -85,6 +93,8 @@ namespace ParkingManagement
 
         public async Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType)
         {
+            ValidateLicensePlate(licensePlate);
+
             await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, vehicleType);
         }
 
@@ -101,6 +111,16 @@ namespace ParkingManagement
             }
         }
 
+        public async Task<IEnumerable<VehicleInParking>> GetAllVehiclesInParkingAsync()
+        {
+            return await vehiclesInParkingProvider.GetAllVehiclesInParkingAsync();
+        }
+
+        public async Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync()
+        {
+            return await vehicleStaysProvider.GetAllVehicleStaysAsync();
+        }
+
         private async Task<StayInvoice> GenerateInvoiceIfApplicableAsync(string licensePlate, VehicleStayTimeRange timeRange)
         {
             var vehicleType = (await vehicleProvider.GetVehicleAsync(licensePlate)).Type;
@@ -113,14 +133,12 @@ namespace ParkingManagement
             });
         }
 
-        public async Task<IEnumerable<VehicleInParking>> GetAllVehiclesInParkingAsync()
+        private void ValidateLicensePlate(string licensePlate)
         {
-            return await vehiclesInParkingProvider.GetAllVehiclesInParkingAsync();
-        }
-
-        public async Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync()
-        {
-            return await vehicleStaysProvider.GetAllVehicleStaysAsync();
+            if (!valitationsService.IsValidLicensePlate(licensePlate))
+            {
+                throw new InvalidOperationException($"License Plate {licensePlate} does not have correct format.");
+            }
         }
     }
 }

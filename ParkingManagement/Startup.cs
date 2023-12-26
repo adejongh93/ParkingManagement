@@ -9,6 +9,7 @@ using ParkingManagement.Repositories;
 using ParkingManagement.Services.FileManagement;
 using ParkingManagement.Services.Invoice;
 using ParkingManagement.Services.ParkingAccess;
+using ParkingManagement.Services.Validations;
 using ParkingManagement.Services.VehicleRegistration;
 using ParkingManagement.Services.VehicleStays;
 
@@ -22,6 +23,8 @@ namespace ParkingManagement
         {
             // TODO: Check if all this can be scoped
             builder.Services.AddSingleton<IParkingManager, ParkingManager>();
+
+            builder.Services.AddSingleton<IValidationsService, ValidationsService>();
 
             builder.Services.AddSingleton<IVehiclesProvider, VehiclesProvider>();
             builder.Services.AddSingleton<IVehiclesInParkingProvider, VehiclesInParkingProvider>();
