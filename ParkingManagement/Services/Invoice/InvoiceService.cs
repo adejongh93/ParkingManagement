@@ -68,13 +68,13 @@ namespace ParkingManagement.Services.Invoice
                 }
             }));
 
-            return GenerateInvoices(residentStays, VehicleType.Resident);
+            return GenerateInvoices(residentStays, VehicleType.RESIDENT);
         }
 
         private async Task<IEnumerable<string>> GetAllLicensePlatesFromResidents()
         {
             return (await vehicleProvider.GetAllVehiclesAsync())
-                .Where(vehicle => vehicle.Type == VehicleType.Resident)
+                .Where(vehicle => vehicle.Type == VehicleType.RESIDENT)
                 .Select(vehicle => vehicle.LicensePlate);
         }
 

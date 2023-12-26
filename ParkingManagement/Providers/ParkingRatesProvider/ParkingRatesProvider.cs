@@ -9,9 +9,9 @@ namespace ParkingManagement.Providers.ParkingRatesProvider
         public double GetRateByVehicleType(VehicleType vehicleType)
             => vehicleType switch
             {
-                VehicleType.External => 0.5,
-                VehicleType.Resident => 0.05,
-                VehicleType.Official => 0,
+                VehicleType.EXTERNAL => 0.5,
+                VehicleType.RESIDENT => 0.05,
+                VehicleType.OFFICIAL => 0,
                 _ => throw new NotImplementedException()
             };
     }

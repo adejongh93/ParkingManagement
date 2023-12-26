@@ -8,8 +8,8 @@ namespace ParkingManagement.Database.Models
 {
     public enum VehicleType
     {
-        External,
-        Official,
-        Resident,
+        EXTERNAL,
+        OFFICIAL,
+        RESIDENT,
     }
 }

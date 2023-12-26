@@ -8,7 +8,7 @@ namespace ParkingManagement.Services.SystemReset.DataModels
 {
     public enum ResetType
     {
-        Partial,
-        Full
+        PARTIAL,
+        FULL
     }
 }

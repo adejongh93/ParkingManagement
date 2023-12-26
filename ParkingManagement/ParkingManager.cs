@@ -83,14 +83,14 @@ namespace ParkingManagement
         }
 
         public async Task RegisterOfficialVehicleAsync(string licensePlate)
-            => await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.Official);
+            => await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.OFFICIAL);
 
         public async Task RegisterResidentVehicleAsync(string licensePlate)
-            => await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.Resident);
+            => await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.RESIDENT);
 
         public async Task RegisterVehicleAsync(string licensePlate, string vehicleTypeStr)
         {
-            var successParsing = Enum.TryParse(vehicleTypeStr, out VehicleType vehicleType);
+            var successParsing = Enum.TryParse(vehicleTypeStr.ToUpperInvariant(), out VehicleType vehicleType);
 
             if (!successParsing)
             {

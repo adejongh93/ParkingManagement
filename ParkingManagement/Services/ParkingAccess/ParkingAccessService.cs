@@ -24,7 +24,7 @@ namespace ParkingManagement.Services.ParkingAccess
             if (!await IsVehicleRegisteredInTheSystem(licensePlate))
             {
                 // Vehicle is not registered in the system. It will be registered as External
-                await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, Database.Models.VehicleType.External);
+                await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, Database.Models.VehicleType.EXTERNAL);
             }
 
             if (await VehicleInParkingAsync(licensePlate))
