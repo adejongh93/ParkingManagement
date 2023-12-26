@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Repositories
 {
-    internal class VehicleRepository : IVehicleRepository
+    public class VehicleRepository : IVehicleRepository
     {
         private readonly IParkingManagementDbContext dbContext;
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Database
 {
-    internal class ParkingManagementDbContext : DbContext, IParkingManagementDbContext
+    public class ParkingManagementDbContext : DbContext, IParkingManagementDbContext
     {
         public DbSet<Vehicle> Vehicles { get; set; }
 

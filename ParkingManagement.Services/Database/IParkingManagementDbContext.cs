@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Database
 {
-    internal interface IParkingManagementDbContext : IDisposable
+    public interface IParkingManagementDbContext : IDisposable
     {
         DbSet<Vehicle> Vehicles { get; set; }
 

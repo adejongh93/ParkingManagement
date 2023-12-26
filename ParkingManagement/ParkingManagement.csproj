@@ -12,6 +12,9 @@
     <PackageReference Include="OfficeOpenXml.Core.ExcelPackage" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ParkingManagement.Services\ParkingManagement.Services.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <None Update="host.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Repositories
 {
-    internal class VehiclesInParkingRepository : IVehiclesInParkingRepository
+    public class VehiclesInParkingRepository : IVehiclesInParkingRepository
     {
         private readonly IParkingManagementDbContext dbContext;
 

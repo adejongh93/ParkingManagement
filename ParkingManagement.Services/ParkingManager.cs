@@ -14,13 +14,10 @@ using ParkingManagement.Services.SystemReset.DataModels;
 using ParkingManagement.Services.Validations;
 using ParkingManagement.Services.VehicleRegistration;
 using ParkingManagement.Services.VehicleStays;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace ParkingManagement
 {
-    internal class ParkingManager : IParkingManager
+    public class ParkingManager : IParkingManager
     {
         private readonly IValidationsService valitationsService;
 

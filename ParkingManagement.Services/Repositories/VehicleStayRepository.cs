@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Repositories
 {
-    internal class VehicleStayRepository : IVehicleStayRepository
+    public class VehicleStayRepository : IVehicleStayRepository
     {
         private readonly IParkingManagementDbContext dbContext;
 

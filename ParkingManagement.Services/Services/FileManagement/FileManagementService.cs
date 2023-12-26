@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace ParkingManagement.Services.FileManagement
 {
-    internal class FileManagementService : IFileManagementService
+    public class FileManagementService : IFileManagementService
     {
         public FileContentResult DownloadResidentsPayments(string fileName, IEnumerable<StayInvoice> invoices)
         {

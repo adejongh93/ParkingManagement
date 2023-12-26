@@ -22,7 +22,7 @@ namespace ParkingManagementTests
         [InlineData("FGHJ-3244", true)]
         [InlineData("TREW-4645", true)]
         [InlineData("ERTY-8787", true)]
-        [InlineData("WERT-2325", true)]
+        [InlineData("WERT-2322", true)]
         public void IsValidLicensePlate_ShouldValidateCorrectly(string licensePlate, bool expectedResult)
         {
             // Arrange
