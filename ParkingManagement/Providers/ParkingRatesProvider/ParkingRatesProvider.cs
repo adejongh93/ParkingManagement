@@ -5,7 +5,7 @@ namespace ParkingManagement.Providers.ParkingRatesProvider
 {
     public class ParkingRatesProvider : IParkingRatesProvider
     {
-        // If these values are intended to change, maybe it's better to put it in the DB
+        // If these values are intended to change, maybe it's better to put them in the DB
         public double GetRateByVehicleType(VehicleType vehicleType)
             => vehicleType switch
             {

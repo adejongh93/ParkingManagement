@@ -10,36 +10,36 @@ namespace ParkingManagement.Repositories
 {
     internal class VehicleRepository : IVehicleRepository
     {
-        private readonly IParkingManagementDbContext _dbContext;
+        private readonly IParkingManagementDbContext dbContext;
 
         public VehicleRepository(IParkingManagementDbContext dbContext)
         {
-            _dbContext = dbContext;
+            this.dbContext = dbContext;
         }
 
         public async Task AddAsync(Vehicle newVehicle)
         {
-            await _dbContext.Vehicles.AddAsync(newVehicle); // I don't think we need to worry a lot about concurrency in this application
-            await _dbContext.SaveChangesAsync();
+            await dbContext.Vehicles.AddAsync(newVehicle); // I don't think we need to worry a lot about concurrency in this application
+            await dbContext.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            _dbContext.Dispose();
+            dbContext.Dispose();
         }
 
         public async Task<IEnumerable<Vehicle>> GetAllAsync()
         {
-            return await _dbContext.Vehicles.ToListAsync();
+            return await dbContext.Vehicles.ToListAsync();
         }
 
         public async Task<int> GetCountAsync()
         {
-            return await _dbContext.Vehicles.CountAsync();
+            return await dbContext.Vehicles.CountAsync();
         }
 
         public async Task<Vehicle> GetAsync(string id)
-            => await _dbContext.Vehicles.FindAsync(id);
+            => await dbContext.Vehicles.FindAsync(id);
 
         public async Task<bool> ExistsAsync(string id)
             => await GetAsync(id) is not null;

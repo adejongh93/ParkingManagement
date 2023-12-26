@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
@@ -8,7 +9,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Primitives;
 using Microsoft.OpenApi.Models;
+using OfficeOpenXml;
 using ParkingManagement.DataModels;
 
 namespace ParkingManagement
@@ -141,15 +144,16 @@ namespace ParkingManagement
 
         [FunctionName("ResidentsPayments")]
         [OpenApiOperation(operationId: "ResidentsPayments", tags: new[] { "Payments" })]
+        [OpenApiParameter(name: "fileName", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **File Name** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> ResidentsPaymentsAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            var payments = await _parkingManager.GenerateResidentsPaymentsAsync();
+            string fileName = req.Query["fileName"];
 
-            return new OkObjectResult(payments);
+            return await _parkingManager.GenerateResidentsPaymentsAsync(fileName);
         }
 
 

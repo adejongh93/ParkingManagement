@@ -1,4 +1,5 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Models;
 using ParkingManagement.DataModels;
 using System;
@@ -11,7 +12,7 @@ namespace ParkingManagement
 {
     public interface IParkingManager
     {
-        Task<IEnumerable<StayInvoice>> GenerateResidentsPaymentsAsync();
+        Task<FileContentResult> GenerateResidentsPaymentsAsync(string fileName);
 
         Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 

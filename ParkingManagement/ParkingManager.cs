@@ -1,9 +1,11 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Models;
 using ParkingManagement.DataModels;
 using ParkingManagement.Providers.VehicleProvider;
 using ParkingManagement.Providers.VehiclesInParkingProvider;
 using ParkingManagement.Providers.VehicleStaysProvider;
+using ParkingManagement.Services.FileManagement;
 using ParkingManagement.Services.Invoice;
 using ParkingManagement.Services.Models;
 using ParkingManagement.Services.ParkingAccess;
@@ -12,7 +14,6 @@ using ParkingManagement.Services.VehicleRegistration;
 using ParkingManagement.Services.VehicleStays;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ParkingManagement
@@ -28,6 +29,7 @@ namespace ParkingManagement
         private readonly IVehicleStaysService vehicleStaysService;
         private readonly IInvoiceService invoiceService;
         private readonly IResetService resetService;
+        private readonly IFileManagementService fileManagementService;
 
         public ParkingManager(IVehicleRegistrationService vehicleRegistrationService,
             IParkingAccessService parkingAccessService,
@@ -36,7 +38,8 @@ namespace ParkingManagement
             IVehiclesInParkingProvider vehiclesInParkingProvider,
             IVehicleStaysProvider vehicleStaysProvider,
             IInvoiceService invoiceService,
-            IResetService resetService)
+            IResetService resetService,
+            IFileManagementService fileManagementService)
         {
             this.vehicleRegistrationService = vehicleRegistrationService;
             this.parkingAccessService = parkingAccessService;
@@ -46,11 +49,13 @@ namespace ParkingManagement
             this.vehicleStaysProvider = vehicleStaysProvider;
             this.invoiceService = invoiceService;
             this.resetService = resetService;
+            this.fileManagementService = fileManagementService;
         }
 
-        public async Task<IEnumerable<StayInvoice>> GenerateResidentsPaymentsAsync()
+        public async Task<FileContentResult> GenerateResidentsPaymentsAsync(string fileName)
         {
-            return await invoiceService.GenerateInvoicesForResidentsAsync();
+            var invoices = await invoiceService.GenerateInvoicesForResidentsAsync();
+            return fileManagementService.DownloadResidentsPayments(fileName, invoices);
         }
 
         public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()

@@ -11,28 +11,28 @@ namespace ParkingManagement.Repositories
 {
     internal class VehicleStayRepository : IVehicleStayRepository
     {
-        private readonly IParkingManagementDbContext _dbContext;
+        private readonly IParkingManagementDbContext dbContext;
 
         public VehicleStayRepository(IParkingManagementDbContext dbContext)
         {
-            _dbContext = dbContext;
+            this.dbContext = dbContext;
         }
 
         public async Task AddAsync(VehicleStay vehicle)
         {
-            await _dbContext.VehiclesStay.AddAsync(vehicle); // I don't think we need to worry a lot about concurrency in this application
-            await _dbContext.SaveChangesAsync();
+            await dbContext.VehiclesStay.AddAsync(vehicle); // I don't think we need to worry a lot about concurrency in this application
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task ClearAsync()
         {
-            _dbContext.VehiclesStay.RemoveRange(_dbContext.VehiclesStay);
-            await _dbContext.SaveChangesAsync();
+            dbContext.VehiclesStay.RemoveRange(dbContext.VehiclesStay);
+            await dbContext.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            dbContext.Dispose();
         }
 
         public Task<bool> ExistsAsync(string id)
@@ -42,7 +42,7 @@ namespace ParkingManagement.Repositories
 
         public async Task<IEnumerable<VehicleStay>> GetAllAsync()
         {
-            return await _dbContext.VehiclesStay.ToListAsync();
+            return await dbContext.VehiclesStay.ToListAsync();
         }
 
         public Task<VehicleStay> GetAsync(string id)

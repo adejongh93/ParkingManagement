@@ -12,21 +12,21 @@ namespace ParkingManagement.Repositories
 {
     internal class VehiclesInParkingRepository : IVehiclesInParkingRepository
     {
-        private readonly IParkingManagementDbContext _dbContext;
+        private readonly IParkingManagementDbContext dbContext;
 
         public VehiclesInParkingRepository(IParkingManagementDbContext dbContext)
         {
-            _dbContext = dbContext;
+            this.dbContext = dbContext;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            dbContext.Dispose();
         }
 
         public async Task<IEnumerable<VehicleInParking>> GetAllAsync()
         {
-            return await _dbContext.VehiclesInParking.ToListAsync();
+            return await dbContext.VehiclesInParking.ToListAsync();
         }
 
         public Task<int> GetCountAsync()
@@ -36,20 +36,20 @@ namespace ParkingManagement.Repositories
 
         public async Task AddAsync(VehicleInParking vehicle)
         {
-            await _dbContext.VehiclesInParking.AddAsync(vehicle); // I don't think we need to worry a lot about concurrency in this application
-            await _dbContext.SaveChangesAsync();
+            await dbContext.VehiclesInParking.AddAsync(vehicle); // I don't think we need to worry a lot about concurrency in this application
+            await dbContext.SaveChangesAsync();
         }
 
         public async Task<VehicleInParking> GetAsync(string id)
-            => await _dbContext.VehiclesInParking.FindAsync(id);
+            => await dbContext.VehiclesInParking.FindAsync(id);
 
         public async Task<bool> ExistsAsync(string id)
             => await GetAsync(id) is not null;
 
         public async Task RemoveAsync(VehicleInParking vehicle)
         {
-            _dbContext.VehiclesInParking.Remove(vehicle); // I don't think we need to worry a lot about concurrency in this application
-            await _dbContext.SaveChangesAsync();
+            dbContext.VehiclesInParking.Remove(vehicle); // I don't think we need to worry a lot about concurrency in this application
+            await dbContext.SaveChangesAsync();
         }
 
         public Task ClearAsync()
@@ -59,8 +59,8 @@ namespace ParkingManagement.Repositories
 
         public async Task UpdateRangeAsync(IEnumerable<VehicleInParking> entities)
         {
-            _dbContext.VehiclesInParking.UpdateRange(entities);
-            await _dbContext.SaveChangesAsync();
+            dbContext.VehiclesInParking.UpdateRange(entities);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

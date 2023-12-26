@@ -6,6 +6,7 @@ using ParkingManagement.Providers.VehicleProvider;
 using ParkingManagement.Providers.VehiclesInParkingProvider;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Repositories;
+using ParkingManagement.Services.FileManagement;
 using ParkingManagement.Services.Invoice;
 using ParkingManagement.Services.ParkingAccess;
 using ParkingManagement.Services.VehicleRegistration;
@@ -31,6 +32,7 @@ namespace ParkingManagement
             builder.Services.AddSingleton<IParkingAccessService, ParkingAccessService>();
             builder.Services.AddSingleton<IVehicleRegistrationService, VehicleRegistrationService>();
             builder.Services.AddSingleton<IVehicleStaysService, VehicleStaysService>();
+            builder.Services.AddSingleton<IFileManagementService, FileManagementService>();
 
             builder.Services.AddSingleton<IVehicleRepository, VehicleRepository>();
             builder.Services.AddSingleton<IVehiclesInParkingRepository, VehiclesInParkingRepository>();
