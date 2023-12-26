@@ -10,6 +10,7 @@ using ParkingManagement.Services.Invoice;
 using ParkingManagement.Services.Models;
 using ParkingManagement.Services.ParkingAccess;
 using ParkingManagement.Services.SystemReset;
+using ParkingManagement.Services.SystemReset.DataModels;
 using ParkingManagement.Services.VehicleRegistration;
 using ParkingManagement.Services.VehicleStays;
 using System;
@@ -87,14 +88,17 @@ namespace ParkingManagement
             await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, vehicleType);
         }
 
-        public async Task ExecutePartialResetAsync()
+        public async Task ExecuteResetAsync(ResetType resetType)
         {
-            await resetService.ExecutePartialResetAsync();
-        }
-
-        public async Task ExecuteFullResetAsync()
-        {
-            await resetService.ExecuteFullResetAsync();
+            switch (resetType)
+            {
+                case ResetType.PARTIAL:
+                    await resetService.ExecutePartialResetAsync();
+                    break;
+                case ResetType.FULL:
+                    await resetService.ExecuteFullResetAsync();
+                    break;
+            }
         }
 
         private async Task<StayInvoice> GenerateInvoiceIfApplicableAsync(string licensePlate, VehicleStayTimeRange timeRange)

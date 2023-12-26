@@ -2,6 +2,7 @@
 using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Models;
 using ParkingManagement.DataModels;
+using ParkingManagement.Services.SystemReset.DataModels;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -25,8 +26,6 @@ namespace ParkingManagement
 
         Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType);
 
-        Task ExecutePartialResetAsync();
-
-        Task ExecuteFullResetAsync();
+        Task ExecuteResetAsync(ResetType resetType);
     }
 }

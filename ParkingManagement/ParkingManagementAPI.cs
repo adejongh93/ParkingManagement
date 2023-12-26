@@ -9,6 +9,7 @@ using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using ParkingManagement.Database.Models;
+using ParkingManagement.Services.SystemReset.DataModels;
 
 namespace ParkingManagement
 {
@@ -103,7 +104,7 @@ namespace ParkingManagement
         public async Task<IActionResult> ResetAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = null)] HttpRequest req)
         {
-            await parkingManager.ExecutePartialResetAsync();
+            await parkingManager.ExecuteResetAsync(ResetType.PARTIAL);
 
             return new OkObjectResult("A new month has just started. All accesses and counters have been reset.");
         }
@@ -176,7 +177,7 @@ namespace ParkingManagement
         public async Task<IActionResult> FullResetAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = null)] HttpRequest req)
         {
-            await parkingManager.ExecuteFullResetAsync();
+            await parkingManager.ExecuteResetAsync(ResetType.FULL);
 
             return new OkObjectResult("Full System Reset done.");
         }
