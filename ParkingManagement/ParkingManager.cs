@@ -88,15 +88,8 @@ namespace ParkingManagement
         public async Task RegisterResidentVehicleAsync(string licensePlate)
             => await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.RESIDENT);
 
-        public async Task RegisterVehicleAsync(string licensePlate, string vehicleTypeStr)
+        public async Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType)
         {
-            var successParsing = Enum.TryParse(vehicleTypeStr, out VehicleType vehicleType);
-
-            if (!successParsing)
-            {
-                throw new InvalidOperationException($"Vehicle Type provided {vehicleTypeStr} does not exist.");
-            }
-
             await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, vehicleType);
         }
 

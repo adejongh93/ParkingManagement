@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ParkingManagement.Database.Models;
 
 namespace ParkingManagement
 {
@@ -30,7 +31,7 @@ namespace ParkingManagement
         public async Task<IActionResult> RegisterEntryAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
-            string licensePlate = req.Query["licensePlate"];
+            var licensePlate = req.Query["licensePlate"];
 
             try
             {
@@ -52,7 +53,7 @@ namespace ParkingManagement
         public async Task<IActionResult> RegisterExitAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
-            string licensePlate = req.Query["licensePlate"];
+            var licensePlate = req.Query["licensePlate"];
 
             try
             {
@@ -74,25 +75,25 @@ namespace ParkingManagement
         [FunctionName("RegisterVehicleAsync")]
         [OpenApiOperation(operationId: "RegisterVehicleAsync", tags: new[] { "Vehicles Registration" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter")]
-        [OpenApiParameter(name: "vehicleType", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **Vehicle Type** parameter")]
+        [OpenApiParameter(name: "vehicleType", In = ParameterLocation.Query, Required = true, Type = typeof(VehicleType), Description = "The **Vehicle Type** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> RegisterVehicleAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
-            string licensePlate = req.Query["licensePlate"];
-            string vehicleType = req.Query["vehicleType"];
-            string vehicleTypeToUpper = vehicleType.ToUpperInvariant();
+            var licensePlate = req.Query["licensePlate"];
+            var vehicleTypeStr = req.Query["vehicleType"].ToString().ToUpper();
+            var vehicleType = Enum.Parse<VehicleType>(vehicleTypeStr);
 
             try
             {
-                await parkingManager.RegisterVehicleAsync(licensePlate, vehicleTypeToUpper);
+                await parkingManager.RegisterVehicleAsync(licensePlate, vehicleType);
             }
             catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message);
             }
 
-            return new OkObjectResult($"A new vehicle of type {vehicleTypeToUpper} has just been registered in the system with license plate: {licensePlate}.");
+            return new OkObjectResult($"A new vehicle of type {vehicleTypeStr} has just been registered in the system with license plate: {licensePlate}.");
         }
 
 
@@ -103,7 +104,7 @@ namespace ParkingManagement
             [HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = null)] HttpRequest req)
         {
             await parkingManager.ExecutePartialResetAsync();
-                    
+
             return new OkObjectResult("A new month has just started. All accesses and counters have been reset.");
         }
 
@@ -115,7 +116,7 @@ namespace ParkingManagement
         public async Task<IActionResult> ResidentsPaymentsAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
-            string fileName = req.Query["fileName"];
+            var fileName = req.Query["fileName"];
 
             return await parkingManager.GenerateResidentsPaymentsAsync(fileName);
         }
@@ -128,7 +129,7 @@ namespace ParkingManagement
         public async Task<IActionResult> RegisterOfficialVehicleAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
-            string licensePlate = req.Query["licensePlate"];
+            var licensePlate = req.Query["licensePlate"];
 
             try
             {
@@ -150,7 +151,7 @@ namespace ParkingManagement
         public async Task<IActionResult> RegisterResidentVehicleAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
         {
-            string licensePlate = req.Query["licensePlate"];
+            var licensePlate = req.Query["licensePlate"];
 
             try
             {
