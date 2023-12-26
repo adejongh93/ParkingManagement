@@ -90,7 +90,7 @@ namespace ParkingManagement
 
         public async Task RegisterVehicleAsync(string licensePlate, string vehicleTypeStr)
         {
-            var successParsing = Enum.TryParse(vehicleTypeStr.ToUpperInvariant(), out VehicleType vehicleType);
+            var successParsing = Enum.TryParse(vehicleTypeStr, out VehicleType vehicleType);
 
             if (!successParsing)
             {

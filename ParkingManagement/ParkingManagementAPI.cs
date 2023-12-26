@@ -81,17 +81,18 @@ namespace ParkingManagement
         {
             string licensePlate = req.Query["licensePlate"];
             string vehicleType = req.Query["vehicleType"];
+            string vehicleTypeToUpper = vehicleType.ToUpperInvariant();
 
             try
             {
-                await parkingManager.RegisterVehicleAsync(licensePlate, vehicleType);
+                await parkingManager.RegisterVehicleAsync(licensePlate, vehicleTypeToUpper);
             }
             catch (Exception ex)
             {
                 return new BadRequestObjectResult(ex.Message);
             }
 
-            return new OkObjectResult($"A new vehicle of type {vehicleType} has just been registered in the system with license plate: {licensePlate}.");
+            return new OkObjectResult($"A new vehicle of type {vehicleTypeToUpper} has just been registered in the system with license plate: {licensePlate}.");
         }
 
 
