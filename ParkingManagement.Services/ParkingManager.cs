@@ -1,21 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using ParkingManagement.DataModels;
-using ParkingManagement.Providers.VehicleProvider;
-using ParkingManagement.Providers.VehiclesInParkingProvider;
+using ParkingManagement.Database.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
-using ParkingManagement.Services.FileManagement;
-using ParkingManagement.Services.Invoice;
-using ParkingManagement.Services.Models;
-using ParkingManagement.Services.ParkingAccess;
-using ParkingManagement.Services.SystemReset;
-using ParkingManagement.Services.SystemReset.DataModels;
-using ParkingManagement.Services.Validations;
-using ParkingManagement.Services.VehicleRegistration;
-using ParkingManagement.Services.VehicleStays;
+using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Providers.VehiclesInParkingProvider;
+using ParkingManagement.Services.Providers.VehiclesProvider;
+using ParkingManagement.Services.Services.FileManagement;
+using ParkingManagement.Services.Services.Invoice;
+using ParkingManagement.Services.Services.Invoice.Models;
+using ParkingManagement.Services.Services.ParkingAccess;
+using ParkingManagement.Services.Services.SystemReset;
+using ParkingManagement.Services.Services.SystemReset.DataModels;
+using ParkingManagement.Services.Services.Validations;
+using ParkingManagement.Services.Services.VehicleRegistration;
+using ParkingManagement.Services.Services.VehicleStays;
 
-namespace ParkingManagement
+namespace ParkingManagement.Services
 {
     public class ParkingManager : IParkingManager
     {

@@ -1,6 +1,6 @@
-﻿using ParkingManagement.Database.Models;
+﻿using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Repositories
+namespace ParkingManagement.Database.Repositories
 {
     public interface IVehicleRepository : IRepository<Vehicle> // TODO: Check all datamodels for the API, the repository and the DB
     {

@@ -1,6 +1,6 @@
-﻿using ParkingManagement.Database.Models;
+﻿using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Providers.ParkingRatesProvider
+namespace ParkingManagement.Services.Providers.ParkingRatesProvider
 {
     public interface IParkingRatesProvider
     {

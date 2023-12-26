@@ -1,8 +1,5 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using ParkingManagement.Repositories;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Database.Repositories;
 
 namespace ParkingManagement.Providers.VehicleStaysProvider
 {

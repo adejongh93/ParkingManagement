@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OfficeOpenXml;
-using ParkingManagement.DataModels;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using ParkingManagement.Services.DataModels;
 
-namespace ParkingManagement.Services.FileManagement
+namespace ParkingManagement.Services.Services.FileManagement
 {
     public class FileManagementService : IFileManagementService
     {
@@ -44,7 +41,7 @@ namespace ParkingManagement.Services.FileManagement
 
                 var count = invoicesList.Count();
 
-                foreach(var idx in Enumerable.Range(0, count))
+                foreach (var idx in Enumerable.Range(0, count))
                 {
                     worksheet.Cells[$"A{idx + 2}"].Value = invoicesList[idx].LicensePlase;
                     worksheet.Cells[$"B{idx + 2}"].Value = invoicesList[idx].TotalTimeInMinutes;

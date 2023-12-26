@@ -1,4 +1,4 @@
-﻿namespace ParkingManagement.Services.Validations
+﻿namespace ParkingManagement.Services.Services.Validations
 {
     public interface IValidationsService
     {

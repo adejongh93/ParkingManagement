@@ -1,17 +1,12 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using ParkingManagement.DataModels;
-using ParkingManagement.Providers.ParkingRatesProvider;
-using ParkingManagement.Providers.VehicleProvider;
-using ParkingManagement.Providers.VehiclesInParkingProvider;
+﻿using ParkingManagement.Database.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
-using ParkingManagement.Services.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Providers.ParkingRatesProvider;
+using ParkingManagement.Services.Providers.VehiclesInParkingProvider;
+using ParkingManagement.Services.Providers.VehiclesProvider;
+using ParkingManagement.Services.Services.Invoice.Models;
 
-namespace ParkingManagement.Services.Invoice
+namespace ParkingManagement.Services.Services.Invoice
 {
     public class InvoiceService : IInvoiceService
     {

@@ -1,9 +1,6 @@
-﻿using ParkingManagement.Repositories;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Repositories;
 
-namespace ParkingManagement.Services.SystemReset
+namespace ParkingManagement.Services.Services.SystemReset
 {
     public class ResetService : IResetService
     {

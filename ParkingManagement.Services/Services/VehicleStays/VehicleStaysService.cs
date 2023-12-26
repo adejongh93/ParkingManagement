@@ -1,8 +1,7 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Repositories;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Database.Repositories;
 
-namespace ParkingManagement.Services.VehicleStays
+namespace ParkingManagement.Services.Services.VehicleStays
 {
     public class VehicleStaysService : IVehicleStaysService
     {

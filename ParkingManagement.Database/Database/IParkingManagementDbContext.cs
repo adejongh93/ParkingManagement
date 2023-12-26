@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using System;
-using System.Threading.Tasks;
+using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Database
+namespace ParkingManagement.Database.Database
 {
     public interface IParkingManagementDbContext : IDisposable
     {

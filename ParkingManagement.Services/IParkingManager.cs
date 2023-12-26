@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using ParkingManagement.DataModels;
-using ParkingManagement.Services.SystemReset.DataModels;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Services.SystemReset.DataModels;
 
-namespace ParkingManagement
+namespace ParkingManagement.Services
 {
     public interface IParkingManager
     {

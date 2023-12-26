@@ -1,13 +1,7 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using ParkingManagement.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Database.Repositories;
 
-namespace ParkingManagement.Providers.VehiclesInParkingProvider
+namespace ParkingManagement.Services.Providers.VehiclesInParkingProvider
 {
     public class VehiclesInParkingProvider : IVehiclesInParkingProvider
     {

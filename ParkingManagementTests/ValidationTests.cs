@@ -1,5 +1,4 @@
-﻿using ParkingManagement.Database.Models;
-using ParkingManagement.Services.Validations;
+﻿using ParkingManagement.Services.Services.Validations;
 
 namespace ParkingManagementTests
 {

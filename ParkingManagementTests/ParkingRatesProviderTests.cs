@@ -1,5 +1,5 @@
-using ParkingManagement.Database.Models;
-using ParkingManagement.Providers.ParkingRatesProvider;
+using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Services.Providers.ParkingRatesProvider;
 
 namespace ParkingManagementTests
 {

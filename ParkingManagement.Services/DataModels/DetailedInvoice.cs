@@ -1,18 +1,12 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.DataModels
+namespace ParkingManagement.Services.DataModels
 {
     public class DetailedInvoice : StayInvoice
     {
         public VehicleType VehicleType { get; set; }
 
-        public IEnumerable<VehicleStayTimeRange> VehicleStays {  get; set; }
+        public IEnumerable<VehicleStayTimeRange> VehicleStays { get; set; }
 
         public double AmountToPayPerMinute { get; set; }
     }

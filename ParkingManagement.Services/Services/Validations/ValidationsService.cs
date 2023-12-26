@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace ParkingManagement.Services.Validations
+namespace ParkingManagement.Services.Services.Validations
 {
     public class ValidationsService : IValidationsService
     {

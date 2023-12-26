@@ -1,7 +1,6 @@
-﻿using ParkingManagement.Database.DataModels;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Services.ParkingAccess
+namespace ParkingManagement.Services.Services.ParkingAccess
 {
     public interface IParkingAccessService
     {

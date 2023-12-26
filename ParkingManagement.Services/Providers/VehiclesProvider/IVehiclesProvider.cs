@@ -1,8 +1,6 @@
-﻿using ParkingManagement.Database.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Providers.VehicleProvider
+namespace ParkingManagement.Services.Providers.VehiclesProvider
 {
     public interface IVehiclesProvider
     {

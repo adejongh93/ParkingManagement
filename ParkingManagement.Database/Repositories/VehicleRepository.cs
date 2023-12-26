@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.EntityFrameworkCore;
-using ParkingManagement.Database;
-using ParkingManagement.Database.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using ParkingManagement.Database.Database;
+using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Repositories
+namespace ParkingManagement.Database.Repositories
 {
     public class VehicleRepository : IVehicleRepository
     {

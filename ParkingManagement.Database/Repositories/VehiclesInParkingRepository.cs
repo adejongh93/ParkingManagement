@@ -1,14 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ParkingManagement.Database;
-using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ParkingManagement.Database.Database;
+using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Repositories
+namespace ParkingManagement.Database.Repositories
 {
     public class VehiclesInParkingRepository : IVehiclesInParkingRepository
     {

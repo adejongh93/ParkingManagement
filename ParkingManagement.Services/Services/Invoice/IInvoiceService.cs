@@ -1,9 +1,7 @@
-﻿using ParkingManagement.DataModels;
-using ParkingManagement.Services.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Services.Invoice.Models;
 
-namespace ParkingManagement.Services.Invoice
+namespace ParkingManagement.Services.Services.Invoice
 {
     public interface IInvoiceService
     {

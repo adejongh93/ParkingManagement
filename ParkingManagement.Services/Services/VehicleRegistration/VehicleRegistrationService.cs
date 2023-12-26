@@ -1,9 +1,7 @@
-﻿using ParkingManagement.Database.Models;
-using ParkingManagement.Repositories;
-using System;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Database.Repositories;
 
-namespace ParkingManagement.Services.VehicleRegistration
+namespace ParkingManagement.Services.Services.VehicleRegistration
 {
     public class VehicleRegistrationService : IVehicleRegistrationService
     {

@@ -1,11 +1,6 @@
-﻿using ParkingManagement.Database.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Services.VehicleRegistration
+namespace ParkingManagement.Services.Services.VehicleRegistration
 {
     public interface IVehicleRegistrationService
     {

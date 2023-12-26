@@ -1,16 +1,10 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
 
-namespace ParkingManagement.Services.Models
+namespace ParkingManagement.Services.Services.Invoice.Models
 {
     public class InvoiceRequestData
     {
-        public string LicensePlate {  get; set; }
+        public string LicensePlate { get; set; }
 
         public VehicleType VehicleType { get; set; }
 

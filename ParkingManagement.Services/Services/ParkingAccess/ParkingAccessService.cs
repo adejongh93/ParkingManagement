@@ -1,10 +1,8 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Repositories;
-using ParkingManagement.Services.VehicleRegistration;
-using System;
-using System.Threading.Tasks;
+﻿using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Database.Repositories;
+using ParkingManagement.Services.Services.VehicleRegistration;
 
-namespace ParkingManagement.Services.ParkingAccess
+namespace ParkingManagement.Services.Services.ParkingAccess
 {
     public class ParkingAccessService : IParkingAccessService
     {
@@ -24,7 +22,7 @@ namespace ParkingManagement.Services.ParkingAccess
             if (!await IsVehicleRegisteredInTheSystem(licensePlate))
             {
                 // Vehicle is not registered in the system. It will be registered as External
-                await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, Database.Models.VehicleType.EXTERNAL);
+                await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.EXTERNAL);
             }
 
             if (await VehicleInParkingAsync(licensePlate))

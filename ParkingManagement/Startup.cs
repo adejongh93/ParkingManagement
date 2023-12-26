@@ -1,17 +1,18 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using ParkingManagement.Database;
-using ParkingManagement.Providers.ParkingRatesProvider;
-using ParkingManagement.Providers.VehicleProvider;
-using ParkingManagement.Providers.VehiclesInParkingProvider;
+using ParkingManagement.Database.Database;
+using ParkingManagement.Database.Repositories;
 using ParkingManagement.Providers.VehicleStaysProvider;
-using ParkingManagement.Repositories;
-using ParkingManagement.Services.FileManagement;
-using ParkingManagement.Services.Invoice;
-using ParkingManagement.Services.ParkingAccess;
-using ParkingManagement.Services.Validations;
-using ParkingManagement.Services.VehicleRegistration;
-using ParkingManagement.Services.VehicleStays;
+using ParkingManagement.Services;
+using ParkingManagement.Services.Providers.ParkingRatesProvider;
+using ParkingManagement.Services.Providers.VehiclesInParkingProvider;
+using ParkingManagement.Services.Providers.VehiclesProvider;
+using ParkingManagement.Services.Services.FileManagement;
+using ParkingManagement.Services.Services.Invoice;
+using ParkingManagement.Services.Services.ParkingAccess;
+using ParkingManagement.Services.Services.Validations;
+using ParkingManagement.Services.Services.VehicleRegistration;
+using ParkingManagement.Services.Services.VehicleStays;
 
 [assembly: FunctionsStartup(typeof(ParkingManagement.Startup))]
 

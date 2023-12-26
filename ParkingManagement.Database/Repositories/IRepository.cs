@@ -1,9 +1,4 @@
-﻿using ParkingManagement.Database.DataModels;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace ParkingManagement.Repositories
+﻿namespace ParkingManagement.Database.Repositories
 {
     public interface IRepository<T> : IDisposable
     {
