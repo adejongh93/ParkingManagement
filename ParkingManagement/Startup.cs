@@ -1,14 +1,15 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using ParkingManagement.Database;
-using ParkingManagement.Providers;
+using ParkingManagement.Providers.ParkingRatesProvider;
+using ParkingManagement.Providers.VehicleProvider;
+using ParkingManagement.Providers.VehiclesInParkingProvider;
+using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Repositories;
-using ParkingManagement.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ParkingManagement.Services.Invoice;
+using ParkingManagement.Services.ParkingAccess;
+using ParkingManagement.Services.VehicleRegistration;
+using ParkingManagement.Services.VehicleStays;
 
 [assembly: FunctionsStartup(typeof(ParkingManagement.Startup))]
 
@@ -18,13 +19,24 @@ namespace ParkingManagement
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
+            // TODO: Check if all this can be scoped
+            builder.Services.AddSingleton<IParkingManager, ParkingManager>();
+
+            builder.Services.AddSingleton<IVehiclesProvider, VehiclesProvider>();
+            builder.Services.AddSingleton<IVehiclesInParkingProvider, VehiclesInParkingProvider>();
+            builder.Services.AddSingleton<IVehicleStaysProvider, VehicleStaysProvider>();
+            builder.Services.AddSingleton<IParkingRatesProvider, ParkingRatesProvider>();
+
+            builder.Services.AddSingleton<IInvoiceService, InvoiceService>();
+            builder.Services.AddSingleton<IParkingAccessService, ParkingAccessService>();
+            builder.Services.AddSingleton<IVehicleRegistrationService, VehicleRegistrationService>();
+            builder.Services.AddSingleton<IVehicleStaysService, VehicleStaysService>();
+
+            builder.Services.AddSingleton<IVehicleRepository, VehicleRepository>();
+            builder.Services.AddSingleton<IVehiclesInParkingRepository, VehiclesInParkingRepository>();
+            builder.Services.AddSingleton<IVehicleStayRepository, VehicleStayRepository>();
+
             builder.Services.AddDbContext<IParkingManagementDbContext, ParkingManagementDbContext>(ServiceLifetime.Singleton, ServiceLifetime.Singleton);
-            builder.Services.AddSingleton<IVehicleRepository, VehicleRepository>(); // TODO: Check if this can be scope
-            builder.Services.AddSingleton<IVehicleInParkingRepository, VehicleInParkingRepository>(); // TODO: Check if this can be scope
-            builder.Services.AddSingleton<IVehicleStayRepository, VehicleStayRepository>(); // TODO: Check if this can be scope
-            builder.Services.AddSingleton<IParkingManager, ParkingManager>(); // TODO: Check if this can be scope
-            builder.Services.AddSingleton<IInvoiceService, InvoiceService>(); // TODO: Check if this can be scope
-            builder.Services.AddSingleton<IParkingRatesProvider, ParkingRatesProvider>(); // TODO: Check if this can be scope
         }
     }
 }

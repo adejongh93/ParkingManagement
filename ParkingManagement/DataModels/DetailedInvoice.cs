@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.DataModels
 {
-    public class DetailedInvoice : Invoice
+    public class DetailedInvoice : StayInvoice
     {
         public VehicleType VehicleType { get; set; }
 

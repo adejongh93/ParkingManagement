@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.DataModels
 {
-    public class Invoice
+    public class StayInvoice
     {
         public string LicensePlase {  get; set; }
 

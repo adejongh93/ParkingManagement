@@ -49,7 +49,7 @@ namespace ParkingManagement.Repositories
             throw new NotImplementedException();
         }
 
-        public Task Clear()
+        public Task ClearAsync()
         {
             throw new NotImplementedException();
         }

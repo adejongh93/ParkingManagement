@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Repositories
 {
-    internal interface IVehicleStayRepository : IRepository<VehicleStay>
+    public interface IVehicleStayRepository : IRepository<VehicleStay>
     {
     }
 }

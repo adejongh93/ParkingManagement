@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Services.Models
 {
-    public class InvoiceCreationData
+    public class InvoiceRequestData
     {
         public string LicensePlate {  get; set; }
 

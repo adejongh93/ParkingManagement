@@ -1,11 +1,7 @@
 ﻿using ParkingManagement.Database.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ParkingManagement.Providers
+namespace ParkingManagement.Providers.ParkingRatesProvider
 {
     public class ParkingRatesProvider : IParkingRatesProvider
     {
@@ -13,7 +9,7 @@ namespace ParkingManagement.Providers
         public double GetRateByVehicleType(VehicleType vehicleType)
             => vehicleType switch
             {
-                VehicleType.Default => 0.5,
+                VehicleType.External => 0.5,
                 VehicleType.Resident => 0.05,
                 VehicleType.Official => 0,
                 _ => throw new NotImplementedException()

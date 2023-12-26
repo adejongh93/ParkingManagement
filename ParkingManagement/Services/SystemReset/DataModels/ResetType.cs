@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ParkingManagement.Database.Models
+namespace ParkingManagement.Services.SystemReset.DataModels
 {
-    public enum VehicleType
+    public enum ResetType
     {
-        External,
-        Official,
-        Resident,
+        Partial,
+        Full
     }
 }

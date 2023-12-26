@@ -11,24 +11,24 @@ namespace ParkingManagement
 {
     public interface IParkingManager
     {
-        Task<IEnumerable<Invoice>> GenerateResidentsPaymentsAsync();
+        Task<IEnumerable<StayInvoice>> GenerateResidentsPaymentsAsync();
 
         Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 
         Task<IEnumerable<VehicleInParking>> GetAllVehiclesInParkingAsync();
 
-        Task<IEnumerable<VehicleStay>> GetAllVehiclesStayAsync();
+        Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync();
 
         Task<int> GetVehiclesCountAsync();
 
         Task RegisterEntryAsync(string licensePlate);
 
-        Task<Invoice> RegisterExitAsync(string licensePlate);
+        Task<StayInvoice> RegisterExitAsync(string licensePlate);
 
         Task RegisterOfficialVehicleAsync(string licensePlate);
 
         Task RegisterResidentVehicleAsync(string licensePlate);
 
-        Task ResetAsync();
+        Task ExecutePartialResetAsync();
     }
 }

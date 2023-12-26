@@ -24,7 +24,7 @@ namespace ParkingManagement.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task Clear()
+        public async Task ClearAsync()
         {
             _dbContext.VehiclesStay.RemoveRange(_dbContext.VehiclesStay);
             await _dbContext.SaveChangesAsync();

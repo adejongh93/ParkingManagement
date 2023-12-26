@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace ParkingManagement.Repositories
 {
-    internal class VehicleInParkingRepository : IVehicleInParkingRepository
+    internal class VehiclesInParkingRepository : IVehiclesInParkingRepository
     {
         private readonly IParkingManagementDbContext _dbContext;
 
-        public VehicleInParkingRepository(IParkingManagementDbContext dbContext)
+        public VehiclesInParkingRepository(IParkingManagementDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -52,7 +52,7 @@ namespace ParkingManagement.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public Task Clear()
+        public Task ClearAsync()
         {
             throw new NotImplementedException();
         }

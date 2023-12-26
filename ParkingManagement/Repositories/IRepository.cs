@@ -19,7 +19,7 @@ namespace ParkingManagement.Repositories
 
         Task RemoveAsync(T entity);
 
-        Task Clear();
+        Task ClearAsync();
 
         Task UpdateRangeAsync(IEnumerable<T> entities);
     }

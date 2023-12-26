@@ -133,7 +133,7 @@ namespace ParkingManagement
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            await _parkingManager.ResetAsync();
+            await _parkingManager.ExecutePartialResetAsync();
                     
             return new OkObjectResult("A new month has just started. All accesses and counters have been reset.");
         }
@@ -189,7 +189,7 @@ namespace ParkingManagement
         {
             _logger.LogInformation("C# HTTP trigger function processed a request.");
 
-            var vehiclesInParking = await _parkingManager.GetAllVehiclesStayAsync();
+            var vehiclesInParking = await _parkingManager.GetAllVehicleStaysAsync();
 
             return new OkObjectResult(vehiclesInParking);
         }
