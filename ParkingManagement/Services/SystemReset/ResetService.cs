@@ -20,7 +20,7 @@ namespace ParkingManagement.Services.SystemReset
             this.vehicleStayRepository = vehicleStayRepository;
         }
 
-        public async Task ExecuteFullReset()
+        public async Task ExecuteFullResetAsync()
         {
             await vehicleStayRepository.ClearAsync();
             await vehiclesInParkingRepository.ClearAsync();

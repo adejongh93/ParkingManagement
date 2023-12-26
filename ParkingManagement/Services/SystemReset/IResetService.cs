@@ -10,6 +10,6 @@ namespace ParkingManagement.Services.SystemReset
     {
         Task ExecutePartialResetAsync();
 
-        Task ExecuteFullReset();
+        Task ExecuteFullResetAsync();
     }
 }

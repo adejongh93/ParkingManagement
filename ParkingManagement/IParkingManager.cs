@@ -30,6 +30,10 @@ namespace ParkingManagement
 
         Task RegisterResidentVehicleAsync(string licensePlate);
 
+        Task RegisterVehicleAsync(string licensePlate, string vehicleTypeStr);
+
         Task ExecutePartialResetAsync();
+
+        Task ExecuteFullResetAsync();
     }
 }
