@@ -1,5 +1,4 @@
 ﻿using ParkingManagement.CommonLibrary;
-using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Services.VehicleRegistration;
@@ -9,7 +8,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
 {
     internal class ParkingAccessService : IParkingAccessService
     {
-        private const int MaximumCapacity = 5;
+        private const int MaximumCapacity = 20;
 
         private readonly IVehicleRegistrationService vehicleRegistrationService;
         private readonly IVehicleStaysService vehicleStaysService;
