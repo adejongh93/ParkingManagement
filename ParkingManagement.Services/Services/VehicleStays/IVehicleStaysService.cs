@@ -1,13 +1,12 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Services.DataModels;
+﻿using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Services.Services.VehicleStays
 {
     public interface IVehicleStaysService
     {
-        Task AddyAsync(VehicleStay vehicleStay);
+        Task AddyAsync(VehicleStayDto vehicleStay);
 
-        Task UpdateAsync(VehicleStay vehicleStay);
+        Task UpdateAsync(VehicleStayDto vehicleStay);
 
         Task DeleteAllCompletedStays();
 
@@ -17,6 +16,6 @@ namespace ParkingManagement.Services.Services.VehicleStays
 
         Task ClearAsync();
 
-        VehicleStay GetVehicleNotCompletedStay(string licensePlate);
+        VehicleStayDto GetVehicleNotCompletedStay(string licensePlate);
     }
 }

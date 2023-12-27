@@ -63,13 +63,13 @@ namespace ParkingManagement.Services.Services.Invoice
                 .Where(vehicle => vehicle.Type == VehicleType.RESIDENT)
                 .Select(vehicle => vehicle.LicensePlate);
 
-        private async Task<IEnumerable<VehicleStay>> GetResidentsStays(IList<string> residentsLicensePlates)
+        private async Task<IEnumerable<VehicleStayDto>> GetResidentsStays(IList<string> residentsLicensePlates)
         {
             var stays = (await vehicleStaysProvider.GetAllAsync()).ToList();
             return stays.Where(stay => residentsLicensePlates.Contains(stay.LicensePlate));
         }
 
-        private IEnumerable<StayInvoice> GenerateInvoices(IEnumerable<VehicleStay> vehicleStays, VehicleType vehicleType, bool calculateAmountToPay)
+        private IEnumerable<StayInvoice> GenerateInvoices(IEnumerable<VehicleStayDto> vehicleStays, VehicleType vehicleType, bool calculateAmountToPay)
         {
             var groups = vehicleStays.GroupBy(stay => stay.LicensePlate);
 

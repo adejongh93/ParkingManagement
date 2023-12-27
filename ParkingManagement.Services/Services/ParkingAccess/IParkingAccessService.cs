@@ -1,5 +1,4 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Services.DataModels;
+﻿using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Services.Services.ParkingAccess
 {
@@ -7,6 +6,6 @@ namespace ParkingManagement.Services.Services.ParkingAccess
     {
         Task RegisterVehicleEntryAsync(string licensePlate);
 
-        Task<VehicleStay> RegisterVehicleExitAsync(string licensePlate);
+        Task<VehicleStayDto> RegisterVehicleExitAsync(string licensePlate);
     }
 }

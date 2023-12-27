@@ -1,7 +1,7 @@
 ﻿using ParkingManagement.CommonLibrary;
-using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Repositories;
 using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Mappers;
 
 namespace ParkingManagement.Services.Providers.VehiclesProvider
 {
@@ -9,16 +9,21 @@ namespace ParkingManagement.Services.Providers.VehiclesProvider
     {
         private readonly IVehicleRepository vehicleRepository;
 
-        public VehiclesProvider(IVehicleRepository vehicleRepository)
+        private readonly IVehicleMapper vehicleMapper;
+
+        public VehiclesProvider(IVehicleRepository vehicleRepository,
+            IVehicleMapper vehicleMapper)
         {
             this.vehicleRepository = vehicleRepository;
+            this.vehicleMapper = vehicleMapper;
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllAsync()
-            => await vehicleRepository.GetAllAsync();
+        public async Task<IEnumerable<VehicleDto>> GetAllAsync()
+            => (await vehicleRepository.GetAllAsync())
+            .Select(vehicle => vehicleMapper.Map(vehicle));
 
-        public async Task<Vehicle> FindAsync(string licensePlate)
-            => await vehicleRepository.FindAsync(licensePlate);
+        public async Task<VehicleDto> FindAsync(string licensePlate)
+            => vehicleMapper.Map(await vehicleRepository.FindAsync(licensePlate));
 
         public async Task<int> CountAsync()
             => await vehicleRepository.CountAsync();

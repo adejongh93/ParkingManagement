@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingManagement.CommonLibrary;
-using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Providers.ParkingRatesProvider;
@@ -60,7 +59,7 @@ namespace ParkingManagement.Services
             return fileManagementService.DownloadResidentsPayments(fileName, invoices);
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()
+        public async Task<IEnumerable<VehicleDto>> GetAllVehiclesAsync()
             => await vehicleProvider.GetAllAsync();
 
         public async Task<int> GetVehiclesCountAsync()
@@ -108,10 +107,10 @@ namespace ParkingManagement.Services
             }
         }
 
-        public IEnumerable<VehicleStay> GetAllVehiclesInParking()
+        public IEnumerable<VehicleStayDto> GetAllVehiclesInParking()
             => vehicleStaysProvider.GetNotCompletedStays();
 
-        public async Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync()
+        public async Task<IEnumerable<VehicleStayDto>> GetAllVehicleStaysAsync()
             => await vehicleStaysProvider.GetAllAsync();
 
         private async Task<StayInvoice> GenerateInvoiceAsync(string licensePlate, bool calculateAmountToPay, VehicleStayTimeRange timeRange)

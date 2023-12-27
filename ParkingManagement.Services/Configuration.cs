@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using ParkingManagement.Providers.VehicleStaysProvider;
+using ParkingManagement.Services.Mappers;
 using ParkingManagement.Services.Providers.ParkingRatesProvider;
 using ParkingManagement.Services.Providers.VehiclesProvider;
 using ParkingManagement.Services.Services.FileManagement;
@@ -30,6 +31,9 @@ namespace ParkingManagement.Services
             builder.Services.AddSingleton<IFileManagementService, FileManagementService>();
             builder.Services.AddSingleton<IValidationsService, ValidationsService>();
             builder.Services.AddSingleton<IResetService, ResetService>();
+
+            builder.Services.AddSingleton<IVehicleMapper, VehicleMapper>();
+            builder.Services.AddSingleton<IVehicleStayMapper, VehicleStayMapper>();
         }
     }
 }

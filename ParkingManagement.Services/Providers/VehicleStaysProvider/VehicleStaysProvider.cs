@@ -1,6 +1,6 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Repositories;
+﻿using ParkingManagement.Database.Repositories;
 using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Mappers;
 
 namespace ParkingManagement.Providers.VehicleStaysProvider
 {
@@ -8,22 +8,29 @@ namespace ParkingManagement.Providers.VehicleStaysProvider
     {
         private readonly IVehicleStayRepository vehicleStayRepository;
 
-        public VehicleStaysProvider(IVehicleStayRepository vehicleStayRepository)
+        private readonly IVehicleStayMapper vehicleStayMapper;
+
+        public VehicleStaysProvider(IVehicleStayRepository vehicleStayRepository,
+            IVehicleStayMapper vehicleStayMapper)
         {
             this.vehicleStayRepository = vehicleStayRepository;
+            this.vehicleStayMapper = vehicleStayMapper;
         }
 
-        public async Task<IEnumerable<VehicleStay>> GetAllAsync()
-            => await vehicleStayRepository.GetAllAsync();
+        public async Task<IEnumerable<VehicleStayDto>> GetAllAsync()
+            => (await vehicleStayRepository.GetAllAsync())
+            .Select(stay => vehicleStayMapper.Map(stay));
 
         public async Task<int> CountAsync()
             => await vehicleStayRepository.CountAsync();
 
-        public IEnumerable<VehicleStay> GetNotCompletedStays()
-            => vehicleStayRepository.GetNotCompletedStays();
+        public IEnumerable<VehicleStayDto> GetNotCompletedStays()
+            => vehicleStayRepository.GetNotCompletedStays()
+            .Select(stay => vehicleStayMapper.Map(stay));
 
-        public IEnumerable<VehicleStay> GetCompletedStays()
-            => vehicleStayRepository.GetCompletedStays();
+        public IEnumerable<VehicleStayDto> GetCompletedStays()
+            => vehicleStayRepository.GetCompletedStays()
+            .Select(stay => vehicleStayMapper.Map(stay));
 
         public int GetNotCompletedStaysCount()
             => GetNotCompletedStays().Count();

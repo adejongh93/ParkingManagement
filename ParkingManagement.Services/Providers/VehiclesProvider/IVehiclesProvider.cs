@@ -6,9 +6,9 @@ namespace ParkingManagement.Services.Providers.VehiclesProvider
 {
     public interface IVehiclesProvider
     {
-        Task<Vehicle> FindAsync(string licensePlate);
+        Task<VehicleDto> FindAsync(string licensePlate);
 
-        Task<IEnumerable<Vehicle>> GetAllAsync();
+        Task<IEnumerable<VehicleDto>> GetAllAsync();
 
         Task<int> CountAsync();
 

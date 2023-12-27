@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ParkingManagement.CommonLibrary;
-using ParkingManagement.Database.DataModels;
 using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Services.SystemReset.DataModels;
 
@@ -10,11 +9,11 @@ namespace ParkingManagement.Services
     {
         Task<FileContentResult> GenerateResidentsPaymentsAsync(string fileName);
 
-        Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
+        Task<IEnumerable<VehicleDto>> GetAllVehiclesAsync();
 
-        IEnumerable<VehicleStay> GetAllVehiclesInParking();
+        IEnumerable<VehicleStayDto> GetAllVehiclesInParking();
 
-        Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync();
+        Task<IEnumerable<VehicleStayDto>> GetAllVehicleStaysAsync();
 
         Task<int> GetVehiclesCountAsync();
 

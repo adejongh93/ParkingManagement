@@ -1,17 +1,16 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Services.DataModels;
+﻿using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Providers.VehicleStaysProvider
 {
     public interface IVehicleStaysProvider
     {
-        Task<IEnumerable<VehicleStay>> GetAllAsync();
+        Task<IEnumerable<VehicleStayDto>> GetAllAsync();
 
         Task<int> CountAsync();
 
-        IEnumerable<VehicleStay> GetNotCompletedStays();
+        IEnumerable<VehicleStayDto> GetNotCompletedStays();
 
-        IEnumerable<VehicleStay> GetCompletedStays();
+        IEnumerable<VehicleStayDto> GetCompletedStays();
 
         int GetNotCompletedStaysCount();
     }

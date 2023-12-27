@@ -1,6 +1,6 @@
-﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Repositories;
+﻿using ParkingManagement.Database.Repositories;
 using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Mappers;
 
 namespace ParkingManagement.Services.Services.VehicleStays
 {
@@ -8,16 +8,20 @@ namespace ParkingManagement.Services.Services.VehicleStays
     {
         private readonly IVehicleStayRepository vehicleStayRepository;
 
-        public VehicleStaysService(IVehicleStayRepository vehicleStayRepository)
+        private readonly IVehicleStayMapper vehicleStayMapper;
+
+        public VehicleStaysService(IVehicleStayRepository vehicleStayRepository,
+            IVehicleStayMapper vehicleStayMapper)
         {
             this.vehicleStayRepository = vehicleStayRepository;
+            this.vehicleStayMapper = vehicleStayMapper;
         }
 
-        public async Task AddyAsync(VehicleStay vehicleStay)
-            => await vehicleStayRepository.AddAsync(vehicleStay);
+        public async Task AddyAsync(VehicleStayDto vehicleStay)
+            => await vehicleStayRepository.AddAsync(vehicleStayMapper.Map(vehicleStay));
 
-        public async Task UpdateAsync(VehicleStay vehicleStay)
-            => await vehicleStayRepository.UpdateAsync(vehicleStay);
+        public async Task UpdateAsync(VehicleStayDto vehicleStay)
+            => await vehicleStayRepository.UpdateAsync(vehicleStayMapper.Map(vehicleStay));
 
         public async Task ClearAsync()
             => await vehicleStayRepository.ClearAsync();
@@ -47,7 +51,7 @@ namespace ParkingManagement.Services.Services.VehicleStays
                 .Where(stay => !stay.StayCompleted)
                 .Count() == 1; // TODO: Improve this
 
-        public VehicleStay GetVehicleNotCompletedStay(string licensePlate)
-            => vehicleStayRepository.GetVehicleNotCompletedStay(licensePlate);
+        public VehicleStayDto GetVehicleNotCompletedStay(string licensePlate)
+            => vehicleStayMapper.Map(vehicleStayRepository.GetVehicleNotCompletedStay(licensePlate));
     }
 }

@@ -46,7 +46,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
             await RegisterEntryAsync(licensePlate);
         }
 
-        public async Task<VehicleStay> RegisterVehicleExitAsync(string licensePlate)
+        public async Task<VehicleStayDto> RegisterVehicleExitAsync(string licensePlate)
         {
             if (!await IsVehicleRegisteredInTheSystem(licensePlate))
             {
@@ -68,7 +68,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
             => vehicleStaysService.IsVehicleInParking(licensePlate);
 
         private async Task RegisterEntryAsync(string licensePlate)
-            => await vehicleStaysService.AddyAsync(new VehicleStay()
+            => await vehicleStaysService.AddyAsync(new VehicleStayDto()
             {
                 Id = Guid.NewGuid().ToString(),
                 LicensePlate = licensePlate,
@@ -76,7 +76,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
                 ExitTime = null
             });
 
-        private async Task<VehicleStay> RegisterExitAsync(string licensePlate)
+        private async Task<VehicleStayDto> RegisterExitAsync(string licensePlate)
         {
             var stayToComplete = vehicleStaysService.GetVehicleNotCompletedStay(licensePlate);
             stayToComplete.ExitTime = DateTime.UtcNow;
