@@ -2,10 +2,8 @@
 
 ## What's next:
 
-Vehículos temporales. Paga menos por cada X viajes
+Offers for vehicles that need to access the parking several times during the month (new type of vehicle)
 
-Capacidad máxima del parking (validar que para que entre un nuevo vehículo no puede estar lleno el parking)
+Relation between Person and Vehicle (owner, choffer, etc.)
 
-Nombre del dueño o chofer
-
-Un vehículo puede cambiar su tipo. Por ejemplo, puede pasar de ser no residente a residente.
+Change vehicle type. For example, from no resident to resident
