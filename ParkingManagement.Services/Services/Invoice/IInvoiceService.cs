@@ -7,7 +7,7 @@ namespace ParkingManagement.Services.Services.Invoice
     {
         Task<DetailedInvoice> GenerateDetailedInvoiceAsync();
 
-        StayInvoice GenerateInvoiceIfApplicable(InvoiceRequestData creationData);
+        StayInvoice GenerateInvoice(InvoiceRequestData creationData);
 
         Task<IEnumerable<StayInvoice>> GenerateInvoicesForResidentsAsync();
     }

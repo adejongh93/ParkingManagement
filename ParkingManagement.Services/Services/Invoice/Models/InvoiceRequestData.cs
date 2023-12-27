@@ -10,5 +10,7 @@ namespace ParkingManagement.Services.Services.Invoice.Models
         public VehicleType VehicleType { get; set; }
 
         public IEnumerable<VehicleStayTimeRange> StaysTimeRanges { get; set; }
+
+        public bool CalculateAmountToPay {  get; set; }
     }
 }

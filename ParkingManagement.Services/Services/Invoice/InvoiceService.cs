@@ -27,17 +27,15 @@ namespace ParkingManagement.Services.Services.Invoice
             throw new NotImplementedException();
         }
 
-        public StayInvoice GenerateInvoiceIfApplicable(InvoiceRequestData creationData)
+        public StayInvoice GenerateInvoice(InvoiceRequestData creationData)
         {
-            var vehicleType = creationData.VehicleType;
-            var rate = parkingRatesProvider.GetRateByVehicleType(vehicleType);
-            var totalMinutes = (int)Math.Ceiling(creationData.StaysTimeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes)); // TODO: Check nullable ExitTime
+            var (totalMinutes, totalAmountToPay) = GetInvoiceDetails(creationData);
 
             return new StayInvoice()
             {
-                LicensePlase = creationData.LicensePlate,
+                LicensePlate = creationData.LicensePlate,
                 TotalTimeInMinutes = totalMinutes,
-                TotalAmountToPay = totalMinutes * rate
+                TotalAmountToPay = totalAmountToPay
             };
         }
 
@@ -56,7 +54,7 @@ namespace ParkingManagement.Services.Services.Invoice
                 return stay;
             });
 
-            return GenerateInvoices(residentStays, VehicleType.RESIDENT);
+            return GenerateInvoices(residentStays, VehicleType.RESIDENT, true);
         }
 
         private async Task<IEnumerable<string>> GetAllLicensePlatesFromResidents()
@@ -70,14 +68,15 @@ namespace ParkingManagement.Services.Services.Invoice
             return stays.Where(stay => residentsLicensePlates.Contains(stay.LicensePlate));
         }
 
-        private IEnumerable<StayInvoice> GenerateInvoices(IEnumerable<VehicleStay> vehicleStays, VehicleType vehicleType)
+        private IEnumerable<StayInvoice> GenerateInvoices(IEnumerable<VehicleStay> vehicleStays, VehicleType vehicleType, bool calculateAmountToPay)
         {
-            var groups = vehicleStays.GroupBy(vehicle => vehicle.LicensePlate);
+            var groups = vehicleStays.GroupBy(stay => stay.LicensePlate);
 
-            return groups.Select(group => GenerateInvoiceIfApplicable(new InvoiceRequestData()
+            return groups.Select(group => GenerateInvoice(new InvoiceRequestData()
             {
                 LicensePlate = group.Key,
                 VehicleType = vehicleType,
+                CalculateAmountToPay = calculateAmountToPay,
                 StaysTimeRanges = group.Select(stay => new VehicleStayTimeRange()
                 {
                     EntryTime = stay.EntryTime,
@@ -85,5 +84,23 @@ namespace ParkingManagement.Services.Services.Invoice
                 })
             }));
         }
+
+        private (int TotalMinutesInParking, double TotalAmountToPay) GetInvoiceDetails(InvoiceRequestData creationData)
+        {
+            var totalMinutes = GetTotalMinutesInParking(creationData.StaysTimeRanges);
+
+            if (creationData.CalculateAmountToPay)
+            {
+                var vehicleType = creationData.VehicleType;
+                var rate = parkingRatesProvider.GetRateByVehicleType(vehicleType);
+
+                return (totalMinutes, totalMinutes * rate);
+            }
+
+            return (totalMinutes, 0);
+        }
+
+        private int GetTotalMinutesInParking(IEnumerable<VehicleStayTimeRange> timeRanges)
+            => (int)Math.Ceiling(timeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes)); // TODO: Check nullable ExitTime
     }
 }

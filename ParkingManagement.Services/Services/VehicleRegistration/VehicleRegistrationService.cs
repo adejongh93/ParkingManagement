@@ -19,9 +19,7 @@ namespace ParkingManagement.Services.Services.VehicleRegistration
         }
 
         public async Task<bool> IsVehicleRegisteredInTheSystemAsync(string licensePlate)
-        {
-            return await vehicleRepository.ExistsByLicensePlateAsync(licensePlate);
-        }
+            => await vehicleRepository.ExistsByLicensePlateAsync(licensePlate);
 
         private async Task CheckVehicleRegistrationAsync(string licensePlate)
         {
@@ -32,12 +30,10 @@ namespace ParkingManagement.Services.Services.VehicleRegistration
         }
 
         private async Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType)
-        {
-            await vehicleRepository.AddAsync(new Vehicle()
+            => await vehicleRepository.AddAsync(new Vehicle()
             {
                 LicensePlate = licensePlate,
                 Type = vehicleType
             });
-        }
     }
 }

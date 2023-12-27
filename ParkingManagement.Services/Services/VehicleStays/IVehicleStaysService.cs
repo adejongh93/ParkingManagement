@@ -4,9 +4,9 @@ namespace ParkingManagement.Services.Services.VehicleStays
 {
     public interface IVehicleStaysService
     {
-        Task AddVehicleStayAsync(VehicleStay vehicleStay);
+        Task AddyAsync(VehicleStay vehicleStay);
 
-        Task UpdateVehicleStayAsync(VehicleStay vehicleStay);
+        Task UpdateAsync(VehicleStay vehicleStay);
 
         Task DeleteAllCompletedStays();
 
@@ -14,7 +14,7 @@ namespace ParkingManagement.Services.Services.VehicleStays
 
         bool IsVehicleInParking(string licensePlate);
 
-        Task ClearAllVehicleStaysAsync();
+        Task ClearAsync();
 
         VehicleStay GetVehicleNotCompletedStay(string licensePlate);
     }

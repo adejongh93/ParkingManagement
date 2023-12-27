@@ -2,7 +2,7 @@
 {
     public class StayInvoice
     {
-        public string LicensePlase { get; set; }
+        public string LicensePlate { get; set; }
 
         public int TotalTimeInMinutes { get; set; }
 

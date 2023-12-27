@@ -13,5 +13,14 @@ namespace ParkingManagement.Services.Providers.ParkingRatesProvider
                 VehicleType.OFFICIAL => 0,
                 _ => throw new NotImplementedException()
             };
+
+        public bool PaysOnExit(VehicleType vehicleType)
+            => vehicleType switch
+            {
+                VehicleType.EXTERNAL => true,
+                VehicleType.RESIDENT => false,
+                VehicleType.OFFICIAL => false,
+                _ => throw new NotImplementedException()
+            };
     }
 }

@@ -2,6 +2,7 @@
 using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
+using ParkingManagement.Services.Providers.ParkingRatesProvider;
 using ParkingManagement.Services.Providers.VehiclesProvider;
 using ParkingManagement.Services.Services.FileManagement;
 using ParkingManagement.Services.Services.Invoice;
@@ -19,6 +20,7 @@ namespace ParkingManagement.Services
     {
         private readonly IVehiclesProvider vehicleProvider;
         private readonly IVehicleStaysProvider vehicleStaysProvider;
+        private readonly IParkingRatesProvider parkingRatesProvider;
 
         private readonly IValidationsService valitationsService;
         private readonly IVehicleRegistrationService vehicleRegistrationService;
@@ -34,6 +36,7 @@ namespace ParkingManagement.Services
             IVehicleStaysService vehicleStaysService,
             IVehiclesProvider vehicleProvider,
             IVehicleStaysProvider vehicleStaysProvider,
+            IParkingRatesProvider parkingRatesProvider,
             IInvoiceService invoiceService,
             IResetService resetService,
             IFileManagementService fileManagementService)
@@ -44,6 +47,7 @@ namespace ParkingManagement.Services
             this.vehicleStaysService = vehicleStaysService;
             this.vehicleProvider = vehicleProvider;
             this.vehicleStaysProvider = vehicleStaysProvider;
+            this.parkingRatesProvider = parkingRatesProvider;
             this.invoiceService = invoiceService;
             this.resetService = resetService;
             this.fileManagementService = fileManagementService;
@@ -73,7 +77,10 @@ namespace ParkingManagement.Services
 
             var vehicleStay = await parkingAccessService.RegisterVehicleExitAsync(licensePlate);
 
-            return await GenerateInvoiceIfApplicableAsync(licensePlate, new VehicleStayTimeRange()
+            var vehicleType = await vehicleProvider.GetVehicleTypeAsync(licensePlate);
+            var calculateAmountToPay = parkingRatesProvider.PaysOnExit(vehicleType);
+
+            return await GenerateInvoiceAsync(licensePlate, calculateAmountToPay, new VehicleStayTimeRange()
             {
                 EntryTime = vehicleStay.EntryTime,
                 ExitTime = (DateTime)vehicleStay.ExitTime // TODO: Check null here
@@ -106,15 +113,16 @@ namespace ParkingManagement.Services
         public async Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync()
             => await vehicleStaysProvider.GetAllAsync();
 
-        private async Task<StayInvoice> GenerateInvoiceIfApplicableAsync(string licensePlate, VehicleStayTimeRange timeRange)
+        private async Task<StayInvoice> GenerateInvoiceAsync(string licensePlate, bool calculateAmountToPay, VehicleStayTimeRange timeRange)
         {
             var vehicleType = (await vehicleProvider.FindAsync(licensePlate)).Type;
 
-            return invoiceService.GenerateInvoiceIfApplicable(new InvoiceRequestData()
+            return invoiceService.GenerateInvoice(new InvoiceRequestData()
             {
                 LicensePlate = licensePlate,
                 VehicleType = vehicleType,
-                StaysTimeRanges = new List<VehicleStayTimeRange>() { timeRange }
+                StaysTimeRanges = new List<VehicleStayTimeRange>() { timeRange },
+                CalculateAmountToPay = calculateAmountToPay
             });
         }
 

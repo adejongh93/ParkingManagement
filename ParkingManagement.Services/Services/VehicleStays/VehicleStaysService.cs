@@ -12,20 +12,14 @@ namespace ParkingManagement.Services.Services.VehicleStays
             this.vehicleStayRepository = vehicleStayRepository;
         }
 
-        public async Task AddVehicleStayAsync(VehicleStay vehicleStay)
-        {
-            await vehicleStayRepository.AddAsync(vehicleStay);
-        }
+        public async Task AddyAsync(VehicleStay vehicleStay)
+            => await vehicleStayRepository.AddAsync(vehicleStay);
 
-        public async Task UpdateVehicleStayAsync(VehicleStay vehicleStay)
-        {
-            await vehicleStayRepository.UpdateAsync(vehicleStay);
-        }
+        public async Task UpdateAsync(VehicleStay vehicleStay)
+            => await vehicleStayRepository.UpdateAsync(vehicleStay);
 
-        public async Task ClearAllVehicleStaysAsync()
-        {
-            await vehicleStayRepository.ClearAsync();
-        }
+        public async Task ClearAsync()
+            => await vehicleStayRepository.ClearAsync();
 
         public async Task DeleteAllCompletedStays()
         {
@@ -43,20 +37,16 @@ namespace ParkingManagement.Services.Services.VehicleStays
                     stay.EntryTime = DateTime.UtcNow;
                     return stay;
                 });
+
             await vehicleStayRepository.UpdateRangeAsync(notCompletedStays);
         }
 
         public bool IsVehicleInParking(string licensePlate)
-        {
-            // the vehicle is in the parking if and only if EXACTLY ONE of its stays is not completed
-            return vehicleStayRepository.GetStaysByLicensePlate(licensePlate)
+            => vehicleStayRepository.GetStaysByLicensePlate(licensePlate) // the vehicle is in the parking if and only if EXACTLY ONE of its stays is not completed
                 .Where(stay => !stay.StayCompleted)
                 .Count() == 1; // TODO: Improve this
-        }
 
         public VehicleStay GetVehicleNotCompletedStay(string licensePlate)
-        {
-            return vehicleStayRepository.GetVehicleNotCompletedStay(licensePlate);
-        }
+            => vehicleStayRepository.GetVehicleNotCompletedStay(licensePlate);
     }
 }

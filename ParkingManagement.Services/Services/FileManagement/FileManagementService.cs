@@ -41,7 +41,7 @@ namespace ParkingManagement.Services.Services.FileManagement
 
                 foreach (var idx in Enumerable.Range(0, count))
                 {
-                    worksheet.Cells[$"A{idx + 2}"].Value = invoicesList[idx].LicensePlase;
+                    worksheet.Cells[$"A{idx + 2}"].Value = invoicesList[idx].LicensePlate;
                     worksheet.Cells[$"B{idx + 2}"].Value = invoicesList[idx].TotalTimeInMinutes;
                     worksheet.Cells[$"C{idx + 2}"].Value = invoicesList[idx].TotalAmountToPay;
                 }
