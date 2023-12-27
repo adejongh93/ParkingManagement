@@ -1,5 +1,7 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using ParkingManagement.Common;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Repositories;
+using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Services.Providers.VehiclesProvider
 {

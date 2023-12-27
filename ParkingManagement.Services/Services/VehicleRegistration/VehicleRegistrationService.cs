@@ -1,4 +1,5 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using ParkingManagement.Common;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Repositories;
 
 namespace ParkingManagement.Services.Services.VehicleRegistration

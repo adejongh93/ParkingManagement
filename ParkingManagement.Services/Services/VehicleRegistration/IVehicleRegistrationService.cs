@@ -1,4 +1,4 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using ParkingManagement.Common;
 
 namespace ParkingManagement.Services.Services.VehicleRegistration
 {

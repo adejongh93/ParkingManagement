@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace ParkingManagement.Database.DataModels
+namespace ParkingManagement.Common
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum VehicleType

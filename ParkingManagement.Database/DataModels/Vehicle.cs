@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ParkingManagement.Common;
+using System.ComponentModel.DataAnnotations;
 
 namespace ParkingManagement.Database.DataModels
 {

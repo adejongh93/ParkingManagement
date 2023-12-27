@@ -5,7 +5,7 @@ namespace ParkingManagement.Services.Services.Invoice
 {
     public interface IInvoiceService
     {
-        Task<DetailedInvoice> GenerateDetailedInvoiceAsync();
+        Task<DetailedStayInvoice> GenerateDetailedInvoiceAsync();
 
         StayInvoice GenerateInvoice(InvoiceRequestData creationData);
 

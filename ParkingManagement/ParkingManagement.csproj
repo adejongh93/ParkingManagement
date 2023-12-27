@@ -8,6 +8,7 @@
 	<PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.2.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ParkingManagement.Common\ParkingManagement.Common.csproj" />
     <ProjectReference Include="..\ParkingManagement.Services\ParkingManagement.Services.csproj" />
   </ItemGroup>
   <ItemGroup>

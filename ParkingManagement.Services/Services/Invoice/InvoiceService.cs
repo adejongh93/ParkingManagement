@@ -1,4 +1,5 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using ParkingManagement.Common;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Providers.ParkingRatesProvider;
@@ -22,7 +23,7 @@ namespace ParkingManagement.Services.Services.Invoice
             this.vehicleStaysProvider = vehicleStaysProvider;
         }
 
-        public Task<DetailedInvoice> GenerateDetailedInvoiceAsync()
+        public Task<DetailedStayInvoice> GenerateDetailedInvoiceAsync()
         {
             throw new NotImplementedException();
         }

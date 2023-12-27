@@ -1,5 +1,7 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using ParkingManagement.Common;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
+using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Services.VehicleRegistration;
 using ParkingManagement.Services.Services.VehicleStays;
 

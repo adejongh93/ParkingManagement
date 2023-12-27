@@ -1,4 +1,4 @@
-using ParkingManagement.Database.DataModels;
+using ParkingManagement.Common;
 using ParkingManagement.Services.Providers.ParkingRatesProvider;
 
 namespace ParkingManagementTests

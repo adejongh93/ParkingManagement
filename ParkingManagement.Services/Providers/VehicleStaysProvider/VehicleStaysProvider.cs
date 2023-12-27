@@ -1,5 +1,6 @@
 ﻿using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Repositories;
+using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Providers.VehicleStaysProvider
 {
