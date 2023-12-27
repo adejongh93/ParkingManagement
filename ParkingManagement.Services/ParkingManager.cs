@@ -15,7 +15,7 @@ using ParkingManagement.Services.Services.VehicleStays;
 
 namespace ParkingManagement.Services
 {
-    public class ParkingManager : IParkingManager
+    internal class ParkingManager : IParkingManager
     {
         private readonly IVehiclesProvider vehicleProvider;
         private readonly IVehicleStaysProvider vehicleStaysProvider;
@@ -56,14 +56,10 @@ namespace ParkingManagement.Services
         }
 
         public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()
-        {
-            return await vehicleProvider.GetAllVehiclesAsync();
-        }
+            => await vehicleProvider.GetAllAsync();
 
         public async Task<int> GetVehiclesCountAsync()
-        {
-            return await vehicleProvider.GetVehiclesCountAsync();
-        }
+            => await vehicleProvider.CountAsync();
 
         public async Task RegisterEntryAsync(string licensePlate)
         {
@@ -105,18 +101,14 @@ namespace ParkingManagement.Services
         }
 
         public IEnumerable<VehicleStay> GetAllVehiclesInParking()
-        {
-            return vehicleStaysProvider.GetNotCompletedStays();
-        }
+            => vehicleStaysProvider.GetNotCompletedStays();
 
         public async Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync()
-        {
-            return await vehicleStaysProvider.GetAllVehicleStaysAsync();
-        }
+            => await vehicleStaysProvider.GetAllAsync();
 
         private async Task<StayInvoice> GenerateInvoiceIfApplicableAsync(string licensePlate, VehicleStayTimeRange timeRange)
         {
-            var vehicleType = (await vehicleProvider.GetVehicleAsync(licensePlate)).Type;
+            var vehicleType = (await vehicleProvider.FindAsync(licensePlate)).Type;
 
             return invoiceService.GenerateInvoiceIfApplicable(new InvoiceRequestData()
             {

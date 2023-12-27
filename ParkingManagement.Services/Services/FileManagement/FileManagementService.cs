@@ -4,12 +4,10 @@ using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Services.Services.FileManagement
 {
-    public class FileManagementService : IFileManagementService
+    internal class FileManagementService : IFileManagementService
     {
         public FileContentResult DownloadResidentsPayments(string fileName, IEnumerable<StayInvoice> invoices)
-        {
-            return GenerateFileContentResult(fileName, invoices);
-        }
+            => GenerateFileContentResult(fileName, invoices);
 
         private FileContentResult GenerateFileContentResult(string fileName, IEnumerable<StayInvoice> invoices)
         {

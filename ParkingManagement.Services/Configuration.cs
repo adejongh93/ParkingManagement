@@ -13,7 +13,7 @@ using ParkingManagement.Services.Services.VehicleStays;
 
 namespace ParkingManagement.Services
 {
-    public class Configuration
+    public static class Configuration
     {
         public static void ConfigureServices(IFunctionsHostBuilder builder)
         {

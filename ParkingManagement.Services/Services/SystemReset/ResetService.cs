@@ -3,7 +3,7 @@ using ParkingManagement.Services.Services.VehicleStays;
 
 namespace ParkingManagement.Services.Services.SystemReset
 {
-    public class ResetService : IResetService
+    internal class ResetService : IResetService
     {
         private readonly IVehicleStaysService vehicleStaysService;
 

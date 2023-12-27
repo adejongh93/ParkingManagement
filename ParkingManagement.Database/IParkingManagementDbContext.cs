@@ -3,7 +3,7 @@ using ParkingManagement.Database.DataModels;
 
 namespace ParkingManagement.Database
 {
-    public interface IParkingManagementDbContext : IDisposable
+    internal interface IParkingManagementDbContext : IDisposable
     {
         DbSet<Vehicle> Vehicles { get; set; }
 

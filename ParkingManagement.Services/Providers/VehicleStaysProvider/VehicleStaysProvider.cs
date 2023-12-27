@@ -3,7 +3,7 @@ using ParkingManagement.Database.Repositories;
 
 namespace ParkingManagement.Providers.VehicleStaysProvider
 {
-    public class VehicleStaysProvider : IVehicleStaysProvider
+    internal class VehicleStaysProvider : IVehicleStaysProvider
     {
         private readonly IVehicleStayRepository vehicleStayRepository;
 
@@ -12,24 +12,16 @@ namespace ParkingManagement.Providers.VehicleStaysProvider
             this.vehicleStayRepository = vehicleStayRepository;
         }
 
-        public async Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync()
-        {
-            return await vehicleStayRepository.GetAllAsync();
-        }
+        public async Task<IEnumerable<VehicleStay>> GetAllAsync()
+            => await vehicleStayRepository.GetAllAsync();
 
-        public async Task<int> GetVehicleStaysCountAsync()
-        {
-            return await vehicleStayRepository.GetCountAsync();
-        }
+        public async Task<int> CountAsync()
+            => await vehicleStayRepository.CountAsync();
 
         public IEnumerable<VehicleStay> GetNotCompletedStays()
-        {
-            return vehicleStayRepository.GetNotCompletedStays();
-        }
+            => vehicleStayRepository.GetNotCompletedStays();
 
         public IEnumerable<VehicleStay> GetCompletedStays()
-        {
-            return vehicleStayRepository.GetCompletedStays();
-        }
+            => vehicleStayRepository.GetCompletedStays();
     }
 }

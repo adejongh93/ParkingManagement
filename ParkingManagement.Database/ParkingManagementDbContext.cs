@@ -3,16 +3,14 @@ using ParkingManagement.Database.DataModels;
 
 namespace ParkingManagement.Database
 {
-    public class ParkingManagementDbContext : DbContext, IParkingManagementDbContext
+    internal class ParkingManagementDbContext : DbContext, IParkingManagementDbContext
     {
         public DbSet<Vehicle> Vehicles { get; set; }
 
         public DbSet<VehicleStay> VehiclesStay { get; set; }
 
         public async Task SaveChangesAsync()
-        {
-            await (this as DbContext).SaveChangesAsync();
-        }
+            => await base.SaveChangesAsync();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

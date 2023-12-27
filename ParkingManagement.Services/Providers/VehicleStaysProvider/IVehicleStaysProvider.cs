@@ -4,9 +4,9 @@ namespace ParkingManagement.Providers.VehicleStaysProvider
 {
     public interface IVehicleStaysProvider
     {
-        Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync();
+        Task<IEnumerable<VehicleStay>> GetAllAsync();
 
-        Task<int> GetVehicleStaysCountAsync();
+        Task<int> CountAsync();
 
         IEnumerable<VehicleStay> GetNotCompletedStays();
 

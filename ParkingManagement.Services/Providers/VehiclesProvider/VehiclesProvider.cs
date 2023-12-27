@@ -3,7 +3,7 @@ using ParkingManagement.Database.Repositories;
 
 namespace ParkingManagement.Services.Providers.VehiclesProvider
 {
-    public class VehiclesProvider : IVehiclesProvider
+    internal class VehiclesProvider : IVehiclesProvider
     {
         private readonly IVehicleRepository vehicleRepository;
 
@@ -12,19 +12,13 @@ namespace ParkingManagement.Services.Providers.VehiclesProvider
             this.vehicleRepository = vehicleRepository;
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()
-        {
-            return await vehicleRepository.GetAllAsync();
-        }
+        public async Task<IEnumerable<Vehicle>> GetAllAsync()
+            => await vehicleRepository.GetAllAsync();
 
-        public async Task<Vehicle> GetVehicleAsync(string licensePlate)
-        {
-            return await vehicleRepository.GetAsync(licensePlate);
-        }
+        public async Task<Vehicle> FindAsync(string licensePlate)
+            => await vehicleRepository.FindAsync(licensePlate);
 
-        public async Task<int> GetVehiclesCountAsync()
-        {
-            return await vehicleRepository.GetCountAsync();
-        }
+        public async Task<int> CountAsync()
+            => await vehicleRepository.CountAsync();
     }
 }

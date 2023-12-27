@@ -3,7 +3,7 @@ using ParkingManagement.Database.Repositories;
 
 namespace ParkingManagement.Services.Services.VehicleRegistration
 {
-    public class VehicleRegistrationService : IVehicleRegistrationService
+    internal class VehicleRegistrationService : IVehicleRegistrationService
     {
         private readonly IVehicleRepository vehicleRepository;
 
@@ -20,7 +20,7 @@ namespace ParkingManagement.Services.Services.VehicleRegistration
 
         public async Task<bool> IsVehicleRegisteredInTheSystemAsync(string licensePlate)
         {
-            return await vehicleRepository.ExistsAsync(licensePlate);
+            return await vehicleRepository.ExistsByLicensePlateAsync(licensePlate);
         }
 
         private async Task CheckVehicleRegistrationAsync(string licensePlate)

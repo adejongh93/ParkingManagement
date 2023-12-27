@@ -5,7 +5,7 @@ using ParkingManagement.Services.Services.VehicleStays;
 
 namespace ParkingManagement.Services.Services.ParkingAccess
 {
-    public class ParkingAccessService : IParkingAccessService
+    internal class ParkingAccessService : IParkingAccessService
     {
         private readonly IVehicleRegistrationService vehicleRegistrationService;
         private readonly IVehicleStaysService vehicleStaysService;
@@ -25,7 +25,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
         {
             if (!await IsVehicleRegisteredInTheSystem(licensePlate))
             {
-                // Vehicle is not registered in the system. It will be registered as External
+                // Vehicle is not registered in the system. It will be registered as EXTERNAL
                 await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.EXTERNAL);
             }
 
@@ -53,25 +53,19 @@ namespace ParkingManagement.Services.Services.ParkingAccess
         }
 
         private async Task<bool> IsVehicleRegisteredInTheSystem(string licensePlate)
-        {
-            return await vehicleRegistrationService.IsVehicleRegisteredInTheSystemAsync(licensePlate);
-        }
+            => await vehicleRegistrationService.IsVehicleRegisteredInTheSystemAsync(licensePlate);
 
         private bool IsVehicleInParking(string licensePlate)
-        {
-            return vehicleStaysService.IsVehicleInParking(licensePlate);
-        }
+            => vehicleStaysService.IsVehicleInParking(licensePlate);
 
         private async Task RegisterEntryAsync(string licensePlate)
-        {
-            await vehicleStaysService.AddVehicleStayAsync(new VehicleStay()
+            => await vehicleStaysService.AddVehicleStayAsync(new VehicleStay()
             {
                 Id = Guid.NewGuid().ToString(),
                 LicensePlate = licensePlate,
                 EntryTime = DateTime.UtcNow,
                 ExitTime = null
             });
-        }
 
         private async Task<VehicleStay> RegisterExitAsync(string licensePlate)
         {

@@ -7,7 +7,7 @@ using ParkingManagement.Services.Services.Invoice.Models;
 
 namespace ParkingManagement.Services.Services.Invoice
 {
-    public class InvoiceService : IInvoiceService
+    internal class InvoiceService : IInvoiceService
     {
         private readonly IParkingRatesProvider parkingRatesProvider;
         private readonly IVehiclesProvider vehicleProvider;
@@ -60,22 +60,14 @@ namespace ParkingManagement.Services.Services.Invoice
         }
 
         private async Task<IEnumerable<string>> GetAllLicensePlatesFromResidents()
-        {
-            return (await vehicleProvider.GetAllVehiclesAsync())
+            => (await vehicleProvider.GetAllAsync())
                 .Where(vehicle => vehicle.Type == VehicleType.RESIDENT)
                 .Select(vehicle => vehicle.LicensePlate);
-        }
 
         private async Task<IEnumerable<VehicleStay>> GetResidentsStays(IList<string> residentsLicensePlates)
         {
-            var stays = (await vehicleStaysProvider.GetAllVehicleStaysAsync()).ToList();
+            var stays = (await vehicleStaysProvider.GetAllAsync()).ToList();
             return stays.Where(stay => residentsLicensePlates.Contains(stay.LicensePlate));
-        }
-
-        private IEnumerable<VehicleStay> GetResidentsInParking(IList<string> residentsLicensePlates)
-        {
-            return vehicleStaysProvider.GetNotCompletedStays()
-                .Where(vehicle => residentsLicensePlates.Contains(vehicle.LicensePlate));
         }
 
         private IEnumerable<StayInvoice> GenerateInvoices(IEnumerable<VehicleStay> vehicleStays, VehicleType vehicleType)

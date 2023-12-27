@@ -3,7 +3,7 @@ using ParkingManagement.Database.Repositories;
 
 namespace ParkingManagement.Services.Services.VehicleStays
 {
-    public class VehicleStaysService : IVehicleStaysService
+    internal class VehicleStaysService : IVehicleStaysService
     {
         private readonly IVehicleStayRepository vehicleStayRepository;
 
@@ -32,7 +32,7 @@ namespace ParkingManagement.Services.Services.VehicleStays
             var completedStaysIds = vehicleStayRepository.GetCompletedStays()
                 .Select(stay => stay.Id);
 
-            await vehicleStayRepository.RemoveAsync(completedStaysIds);
+            await vehicleStayRepository.RemoveRangeAsync(completedStaysIds);
         }
 
         public async Task ResetEntryTimeForNotCompletedStaysAsync()
