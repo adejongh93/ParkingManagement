@@ -1,41 +1,35 @@
 ﻿using ParkingManagement.Database.Repositories;
+using ParkingManagement.Services.Services.VehicleStays;
 
 namespace ParkingManagement.Services.Services.SystemReset
 {
     public class ResetService : IResetService
     {
+        private readonly IVehicleStaysService vehicleStaysService;
+
         private readonly IVehicleRepository vehicleRepository;
-        private readonly IVehiclesInParkingRepository vehiclesInParkingRepository;
         private readonly IVehicleStayRepository vehicleStayRepository;
 
-        public ResetService(IVehicleRepository vehicleRepository,
-            IVehiclesInParkingRepository vehiclesInParkingRepository,
+        public ResetService(IVehicleStaysService vehicleStaysService,
+            IVehicleRepository vehicleRepository,
             IVehicleStayRepository vehicleStayRepository)
         {
+            this.vehicleStaysService = vehicleStaysService;
+
             this.vehicleRepository = vehicleRepository;
-            this.vehiclesInParkingRepository = vehiclesInParkingRepository;
             this.vehicleStayRepository = vehicleStayRepository;
         }
 
         public async Task ExecuteFullResetAsync()
         {
             await vehicleStayRepository.ClearAsync();
-            await vehiclesInParkingRepository.ClearAsync();
             await vehicleRepository.ClearAsync();
         }
 
         public async Task ExecutePartialResetAsync()
         {
-            await vehicleStayRepository.ClearAsync();
-
-            var vehiclesInParking = await vehiclesInParkingRepository.GetAllAsync();
-            vehiclesInParking = vehiclesInParking.Select(vehicle =>
-            {
-                vehicle.EntryTime = DateTime.UtcNow;
-                return vehicle;
-            });
-
-            await vehiclesInParkingRepository.UpdateRangeAsync(vehiclesInParking);
+            await vehicleStaysService.DeleteAllCompletedStays();
+            await vehicleStaysService.ResetEntryTimeForNotCompletedStaysAsync();
         }
     }
 }

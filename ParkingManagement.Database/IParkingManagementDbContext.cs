@@ -7,8 +7,6 @@ namespace ParkingManagement.Database
     {
         DbSet<Vehicle> Vehicles { get; set; }
 
-        DbSet<VehicleInParking> VehiclesInParking { get; set; }
-
         DbSet<VehicleStay> VehiclesStay { get; set; }
 
         Task SaveChangesAsync();

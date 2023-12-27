@@ -11,7 +11,7 @@ namespace ParkingManagement.Services
 
         Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
 
-        Task<IEnumerable<VehicleInParking>> GetAllVehiclesInParkingAsync();
+        IEnumerable<VehicleStay> GetAllVehiclesInParking();
 
         Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync();
 

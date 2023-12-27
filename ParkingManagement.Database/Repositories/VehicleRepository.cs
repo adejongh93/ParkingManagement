@@ -34,22 +34,28 @@ namespace ParkingManagement.Database.Repositories
         }
 
         public async Task<Vehicle> GetAsync(string id)
-            => await dbContext.Vehicles.FindAsync(id);
+            => await dbContext.Vehicles.FindAsync(id); // Check null here
 
-        public async Task<bool> ExistsAsync(string id)
-            => await GetAsync(id) is not null;
+        public async Task<bool> ExistsAsync(string licensePlate)
+            => await GetAsync(licensePlate) is not null;
 
-        public Task RemoveAsync(Vehicle entity)
+        public async Task ClearAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        public Task ClearAsync()
-        {
-            throw new NotImplementedException();
+            dbContext.Vehicles.RemoveRange(dbContext.Vehicles);
+            await dbContext.SaveChangesAsync();
         }
 
         public Task UpdateRangeAsync(IEnumerable<Vehicle> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(Vehicle entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveAsync(IEnumerable<string> ids)
         {
             throw new NotImplementedException();
         }

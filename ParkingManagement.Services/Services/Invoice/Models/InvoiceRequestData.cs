@@ -1,4 +1,5 @@
 ﻿using ParkingManagement.Database.DataModels;
+using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Services.Services.Invoice.Models
 {

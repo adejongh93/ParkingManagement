@@ -139,10 +139,10 @@ namespace ParkingManagement
         [FunctionName("GetAllVehiclesInParking")]
         [OpenApiOperation(operationId: "GetAllVehiclesInParking", tags: new[] { "Labs" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public async Task<IActionResult> GetAllVehiclesInParkingAsync(
+        public IActionResult GetAllVehiclesInParkingAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
-            var vehiclesInParking = await parkingManager.GetAllVehiclesInParkingAsync();
+            var vehiclesInParking = parkingManager.GetAllVehiclesInParking();
 
             return new OkObjectResult(vehiclesInParking);
         }

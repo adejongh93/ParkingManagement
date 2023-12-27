@@ -1,20 +1,24 @@
 ﻿using ParkingManagement.Database.DataModels;
-using ParkingManagement.Database.Repositories;
+using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.Services.VehicleRegistration;
+using ParkingManagement.Services.Services.VehicleStays;
 
 namespace ParkingManagement.Services.Services.ParkingAccess
 {
     public class ParkingAccessService : IParkingAccessService
     {
         private readonly IVehicleRegistrationService vehicleRegistrationService;
+        private readonly IVehicleStaysService vehicleStaysService;
 
-        private readonly IVehiclesInParkingRepository vehiclesInParkingRepository;
+        private readonly IVehicleStaysProvider vehicleStaysProvider;
 
         public ParkingAccessService(IVehicleRegistrationService vehicleRegistrationService,
-            IVehiclesInParkingRepository vehiclesInParkingRepository)
+            IVehicleStaysService vehicleStaysService,
+            IVehicleStaysProvider vehicleStaysProvider)
         {
             this.vehicleRegistrationService = vehicleRegistrationService;
-            this.vehiclesInParkingRepository = vehiclesInParkingRepository;
+            this.vehicleStaysService = vehicleStaysService;
+            this.vehicleStaysProvider = vehicleStaysProvider;
         }
 
         public async Task RegisterVehicleEntryAsync(string licensePlate)
@@ -25,7 +29,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
                 await vehicleRegistrationService.RegisterVehicleInTheSystemAsync(licensePlate, VehicleType.EXTERNAL);
             }
 
-            if (await VehicleInParkingAsync(licensePlate))
+            if (IsVehicleInParking(licensePlate))
             {
                 throw new InvalidOperationException($"Vehicle with license plate {licensePlate} is already in the parking.");
             }
@@ -40,7 +44,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
                 throw new InvalidOperationException($"Vehicle with license plate {licensePlate} is not registered in the system.");
             }
 
-            if (!await VehicleInParkingAsync(licensePlate))
+            if (!IsVehicleInParking(licensePlate))
             {
                 throw new InvalidOperationException($"Vehicle with license plate {licensePlate} is not in the parking.");
             }
@@ -53,39 +57,30 @@ namespace ParkingManagement.Services.Services.ParkingAccess
             return await vehicleRegistrationService.IsVehicleRegisteredInTheSystemAsync(licensePlate);
         }
 
-        private async Task<bool> VehicleInParkingAsync(string licensePlate)
+        private bool IsVehicleInParking(string licensePlate)
         {
-            return await vehiclesInParkingRepository.ExistsAsync(licensePlate);
+            return vehicleStaysService.IsVehicleInParking(licensePlate);
         }
 
         private async Task RegisterEntryAsync(string licensePlate)
         {
-            await vehiclesInParkingRepository.AddAsync(new VehicleInParking()
+            await vehicleStaysService.AddVehicleStayAsync(new VehicleStay()
             {
+                Id = Guid.NewGuid().ToString(),
                 LicensePlate = licensePlate,
-                EntryTime = DateTime.UtcNow
+                EntryTime = DateTime.UtcNow,
+                ExitTime = null
             });
         }
 
         private async Task<VehicleStay> RegisterExitAsync(string licensePlate)
         {
-            var vehicle = await vehiclesInParkingRepository.GetAsync(licensePlate);
-            await RemoveVehicleFromParkingAsync(vehicle);
+            var stayToComplete = vehicleStaysService.GetVehicleNotCompletedStay(licensePlate);
+            stayToComplete.ExitTime = DateTime.UtcNow;
 
-            return new VehicleStay()
-            {
-                LicensePlate = licensePlate,
-                TimeRange = new VehicleStayTimeRange()
-                {
-                    EntryTime = vehicle.EntryTime,
-                    ExitTime = DateTime.UtcNow
-                }
-            };
-        }
+            await vehicleStaysService.UpdateVehicleStayAsync(stayToComplete);
 
-        private async Task RemoveVehicleFromParkingAsync(VehicleInParking vehicleInParking)
-        {
-            await vehiclesInParkingRepository.RemoveAsync(vehicleInParking);
+            return stayToComplete;
         }
     }
 }

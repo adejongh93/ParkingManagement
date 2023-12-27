@@ -6,5 +6,7 @@ namespace ParkingManagement.Database.Repositories
     {
         //// For the future, maybe retrieve something specific to a vehicle like the owner and/or regular choffer
         // Task<Person> GetOwnerAsync(int licensePlate);
+
+        Task<bool> ExistsAsync(string licensePlate);
     }
 }

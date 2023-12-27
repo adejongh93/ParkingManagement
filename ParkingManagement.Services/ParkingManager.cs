@@ -2,7 +2,6 @@
 using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
-using ParkingManagement.Services.Providers.VehiclesInParkingProvider;
 using ParkingManagement.Services.Providers.VehiclesProvider;
 using ParkingManagement.Services.Services.FileManagement;
 using ParkingManagement.Services.Services.Invoice;
@@ -20,7 +19,6 @@ namespace ParkingManagement.Services
     {
         private readonly IVehiclesProvider vehicleProvider;
         private readonly IVehicleStaysProvider vehicleStaysProvider;
-        private readonly IVehiclesInParkingProvider vehiclesInParkingProvider;
 
         private readonly IValidationsService valitationsService;
         private readonly IVehicleRegistrationService vehicleRegistrationService;
@@ -35,7 +33,6 @@ namespace ParkingManagement.Services
             IParkingAccessService parkingAccessService,
             IVehicleStaysService vehicleStaysService,
             IVehiclesProvider vehicleProvider,
-            IVehiclesInParkingProvider vehiclesInParkingProvider,
             IVehicleStaysProvider vehicleStaysProvider,
             IInvoiceService invoiceService,
             IResetService resetService,
@@ -46,7 +43,6 @@ namespace ParkingManagement.Services
             this.parkingAccessService = parkingAccessService;
             this.vehicleStaysService = vehicleStaysService;
             this.vehicleProvider = vehicleProvider;
-            this.vehiclesInParkingProvider = vehiclesInParkingProvider;
             this.vehicleStaysProvider = vehicleStaysProvider;
             this.invoiceService = invoiceService;
             this.resetService = resetService;
@@ -81,9 +77,11 @@ namespace ParkingManagement.Services
 
             var vehicleStay = await parkingAccessService.RegisterVehicleExitAsync(licensePlate);
 
-            await vehicleStaysService.AddVehicleStayAsync(vehicleStay);
-
-            return await GenerateInvoiceIfApplicableAsync(licensePlate, vehicleStay.TimeRange);
+            return await GenerateInvoiceIfApplicableAsync(licensePlate, new VehicleStayTimeRange()
+            {
+                EntryTime = vehicleStay.EntryTime,
+                ExitTime = (DateTime)vehicleStay.ExitTime // TODO: Check null here
+            });
         }
 
         public async Task RegisterVehicleAsync(string licensePlate, VehicleType vehicleType)
@@ -106,9 +104,9 @@ namespace ParkingManagement.Services
             }
         }
 
-        public async Task<IEnumerable<VehicleInParking>> GetAllVehiclesInParkingAsync()
+        public IEnumerable<VehicleStay> GetAllVehiclesInParking()
         {
-            return await vehiclesInParkingProvider.GetAllVehiclesInParkingAsync();
+            return vehicleStaysProvider.GetNotCompletedStays();
         }
 
         public async Task<IEnumerable<VehicleStay>> GetAllVehicleStaysAsync()

@@ -17,14 +17,19 @@ namespace ParkingManagement.Providers.VehicleStaysProvider
             return await vehicleStayRepository.GetAllAsync();
         }
 
-        public async Task<VehicleStay> GetVehicleStayAsync(string licensePlate)
-        {
-            return await vehicleStayRepository.GetAsync(licensePlate);
-        }
-
         public async Task<int> GetVehicleStaysCountAsync()
         {
             return await vehicleStayRepository.GetCountAsync();
+        }
+
+        public IEnumerable<VehicleStay> GetNotCompletedStays()
+        {
+            return vehicleStayRepository.GetNotCompletedStays();
+        }
+
+        public IEnumerable<VehicleStay> GetCompletedStays()
+        {
+            return vehicleStayRepository.GetCompletedStays();
         }
     }
 }

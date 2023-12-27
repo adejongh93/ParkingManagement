@@ -2,7 +2,6 @@
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Providers.ParkingRatesProvider;
-using ParkingManagement.Services.Providers.VehiclesInParkingProvider;
 using ParkingManagement.Services.Providers.VehiclesProvider;
 using ParkingManagement.Services.Services.Invoice.Models;
 
@@ -13,16 +12,13 @@ namespace ParkingManagement.Services.Services.Invoice
         private readonly IParkingRatesProvider parkingRatesProvider;
         private readonly IVehiclesProvider vehicleProvider;
         private readonly IVehicleStaysProvider vehicleStaysProvider;
-        private readonly IVehiclesInParkingProvider vehiclesInParkingProvider;
 
         public InvoiceService(IParkingRatesProvider parkingRatesProvider,
             IVehiclesProvider vehicleProvider,
-            IVehiclesInParkingProvider vehiclesInParkingProvider,
             IVehicleStaysProvider vehicleStaysProvider)
         {
             this.parkingRatesProvider = parkingRatesProvider;
             this.vehicleProvider = vehicleProvider;
-            this.vehiclesInParkingProvider = vehiclesInParkingProvider;
             this.vehicleStaysProvider = vehicleStaysProvider;
         }
 
@@ -35,7 +31,7 @@ namespace ParkingManagement.Services.Services.Invoice
         {
             var vehicleType = creationData.VehicleType;
             var rate = parkingRatesProvider.GetRateByVehicleType(vehicleType);
-            var totalMinutes = (int)creationData.StaysTimeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes);
+            var totalMinutes = (int)creationData.StaysTimeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes); // TODO: Check nullable ExitTime
 
             return new StayInvoice()
             {
@@ -51,17 +47,14 @@ namespace ParkingManagement.Services.Services.Invoice
 
             var residentStays = await GetResidentsStays(residentsLicensePlates);
 
-            var residentsInParking = await GetResidentsInParking(residentsLicensePlates);
-
-            residentStays = residentStays.Union(residentsInParking.Select(residentInParking => new VehicleStay()
+            residentStays = residentStays.Select(stay =>
             {
-                LicensePlate = residentInParking.LicensePlate,
-                TimeRange = new VehicleStayTimeRange()
+                if (!stay.StayCompleted)
                 {
-                    EntryTime = residentInParking.EntryTime,
-                    ExitTime = DateTime.UtcNow
+                    stay.ExitTime = DateTime.UtcNow;
                 }
-            }));
+                return stay;
+            });
 
             return GenerateInvoices(residentStays, VehicleType.RESIDENT);
         }
@@ -79,10 +72,10 @@ namespace ParkingManagement.Services.Services.Invoice
             return stays.Where(stay => residentsLicensePlates.Contains(stay.LicensePlate));
         }
 
-        private async Task<IEnumerable<VehicleInParking>> GetResidentsInParking(IList<string> residentsLicensePlates)
+        private IEnumerable<VehicleStay> GetResidentsInParking(IList<string> residentsLicensePlates)
         {
-            var vehiclesInParking = (await vehiclesInParkingProvider.GetAllVehiclesInParkingAsync()).ToList();
-            return vehiclesInParking.Where(vehicle => residentsLicensePlates.Contains(vehicle.LicensePlate)).ToList();
+            return vehicleStaysProvider.GetNotCompletedStays()
+                .Where(vehicle => residentsLicensePlates.Contains(vehicle.LicensePlate));
         }
 
         private IEnumerable<StayInvoice> GenerateInvoices(IEnumerable<VehicleStay> vehicleStays, VehicleType vehicleType)
@@ -95,8 +88,8 @@ namespace ParkingManagement.Services.Services.Invoice
                 VehicleType = vehicleType,
                 StaysTimeRanges = group.Select(stay => new VehicleStayTimeRange()
                 {
-                    EntryTime = stay.TimeRange.EntryTime,
-                    ExitTime = stay.TimeRange.ExitTime
+                    EntryTime = stay.EntryTime,
+                    ExitTime = (DateTime)stay.ExitTime // TODO: Check null here
                 })
             }));
         }
