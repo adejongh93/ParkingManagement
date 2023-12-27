@@ -4,6 +4,6 @@
 
 Offers for vehicles that need to access the parking several times during the month (new type of vehicle)
 
-Name of vehicle owner or choffer
+Relation between Person and Vehicle (owner, choffer, etc.)
 
 Change vehicle type. For example, from no resident to resident
