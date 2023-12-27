@@ -1,4 +1,4 @@
-﻿using ParkingManagement.Database.Database.DataModels;
+﻿using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Providers.ParkingRatesProvider;

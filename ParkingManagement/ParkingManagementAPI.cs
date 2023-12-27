@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.OpenApi.Core.Attributes;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Services;
 using ParkingManagement.Services.Services.SystemReset.DataModels;
 

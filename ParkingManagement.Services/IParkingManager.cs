@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ParkingManagement.Database.Database.DataModels;
+using ParkingManagement.Database.DataModels;
 using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Services.SystemReset.DataModels;
 

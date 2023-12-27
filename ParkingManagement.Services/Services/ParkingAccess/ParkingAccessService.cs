@@ -1,4 +1,4 @@
-﻿using ParkingManagement.Database.Database.DataModels;
+﻿using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Repositories;
 using ParkingManagement.Services.Services.VehicleRegistration;
 

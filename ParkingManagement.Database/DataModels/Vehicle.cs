@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ParkingManagement.Database.Database.DataModels
+namespace ParkingManagement.Database.DataModels
 {
     public record Vehicle()
     {
