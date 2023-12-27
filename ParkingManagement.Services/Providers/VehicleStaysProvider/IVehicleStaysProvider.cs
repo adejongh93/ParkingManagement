@@ -11,5 +11,7 @@ namespace ParkingManagement.Providers.VehicleStaysProvider
         IEnumerable<VehicleStay> GetNotCompletedStays();
 
         IEnumerable<VehicleStay> GetCompletedStays();
+
+        int GetNotCompletedStaysCount();
     }
 }

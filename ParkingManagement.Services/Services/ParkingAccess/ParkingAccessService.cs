@@ -7,6 +7,8 @@ namespace ParkingManagement.Services.Services.ParkingAccess
 {
     internal class ParkingAccessService : IParkingAccessService
     {
+        private const int MaximumCapacity = 5;
+
         private readonly IVehicleRegistrationService vehicleRegistrationService;
         private readonly IVehicleStaysService vehicleStaysService;
 
@@ -23,6 +25,11 @@ namespace ParkingManagement.Services.Services.ParkingAccess
 
         public async Task RegisterVehicleEntryAsync(string licensePlate)
         {
+            if (ParkingIsFull)
+            {
+                throw new InvalidOperationException($"Parking is full. Entry not possible.");
+            }
+
             if (!await IsVehicleRegisteredInTheSystem(licensePlate))
             {
                 // Vehicle is not registered in the system. It will be registered as EXTERNAL
@@ -76,5 +83,8 @@ namespace ParkingManagement.Services.Services.ParkingAccess
 
             return stayToComplete;
         }
+
+        private bool ParkingIsFull
+            => vehicleStaysProvider.GetNotCompletedStaysCount() == MaximumCapacity;
     }
 }
