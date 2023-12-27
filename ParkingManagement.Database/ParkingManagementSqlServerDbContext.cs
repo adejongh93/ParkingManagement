@@ -3,7 +3,7 @@ using ParkingManagement.Database.DataModels;
 
 namespace ParkingManagement.Database
 {
-    internal class ParkingManagementDbContext : DbContext, IParkingManagementDbContext
+    internal class ParkingManagementSqlServerDbContext : DbContext, IParkingManagementDbContext
     {
         public DbSet<Vehicle> Vehicles { get; set; }
 
@@ -14,8 +14,7 @@ namespace ParkingManagement.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase(databaseName: "ParkingManagement");
-            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.UseSqlServer("connectionString");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ParkingManagement.Database
             builder.Services.AddSingleton<IVehicleRepository, VehicleRepository>();
             builder.Services.AddSingleton<IVehicleStayRepository, VehicleStayRepository>();
 
-            builder.Services.AddDbContext<IParkingManagementDbContext, ParkingManagementDbContext>(ServiceLifetime.Singleton, ServiceLifetime.Singleton);
+            builder.Services.AddDbContext<IParkingManagementDbContext, ParkingManagementInMemoryDbContext>(ServiceLifetime.Singleton, ServiceLifetime.Singleton);
         }
     }
 }
