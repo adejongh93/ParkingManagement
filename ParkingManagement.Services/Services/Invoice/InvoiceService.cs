@@ -31,7 +31,7 @@ namespace ParkingManagement.Services.Services.Invoice
         {
             var vehicleType = creationData.VehicleType;
             var rate = parkingRatesProvider.GetRateByVehicleType(vehicleType);
-            var totalMinutes = (int)creationData.StaysTimeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes); // TODO: Check nullable ExitTime
+            var totalMinutes = (int)Math.Ceiling(creationData.StaysTimeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes)); // TODO: Check nullable ExitTime
 
             return new StayInvoice()
             {
