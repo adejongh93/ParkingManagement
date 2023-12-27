@@ -1,4 +1,4 @@
-﻿using ParkingManagement.Common;
+﻿using ParkingManagement.CommonLibrary;
 using ParkingManagement.Services.DataModels;
 
 namespace ParkingManagement.Services.Services.Invoice.Models

@@ -12,7 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\ParkingManagement.Common\ParkingManagement.Common.csproj" />
+	  <ProjectReference Include="..\ParkingManagement.CommonLibrary\ParkingManagement.CommonLibrary.csproj" />
 	  <ProjectReference Include="..\ParkingManagement.Database\ParkingManagement.Database.csproj" />
 	</ItemGroup>
 

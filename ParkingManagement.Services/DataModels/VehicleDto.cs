@@ -1,11 +1,9 @@
 ﻿using ParkingManagement.CommonLibrary;
-using System.ComponentModel.DataAnnotations;
 
-namespace ParkingManagement.Database.DataModels
+namespace ParkingManagement.Services.DataModels
 {
-    public record Vehicle()
+    public record VehicleDto()
     {
-        [Key]
         public string LicensePlate { get; set; }
 
         public VehicleType Type { get; set; }

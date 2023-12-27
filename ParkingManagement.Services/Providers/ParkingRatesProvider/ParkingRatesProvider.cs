@@ -1,4 +1,4 @@
-﻿using ParkingManagement.Common;
+﻿using ParkingManagement.CommonLibrary;
 
 namespace ParkingManagement.Services.Providers.ParkingRatesProvider
 {

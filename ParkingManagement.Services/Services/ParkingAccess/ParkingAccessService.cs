@@ -1,4 +1,4 @@
-﻿using ParkingManagement.Common;
+﻿using ParkingManagement.CommonLibrary;
 using ParkingManagement.Database.DataModels;
 using ParkingManagement.Providers.VehicleStaysProvider;
 using ParkingManagement.Services.DataModels;
@@ -29,7 +29,7 @@ namespace ParkingManagement.Services.Services.ParkingAccess
         {
             if (ParkingIsFull)
             {
-                throw new InvalidOperationException($"Parking is full. Entry not possible.");
+                throw new InvalidOperationException("Parking is full. Entry not possible.");
             }
 
             if (!await IsVehicleRegisteredInTheSystem(licensePlate))

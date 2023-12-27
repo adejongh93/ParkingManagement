@@ -1,4 +1,4 @@
-﻿using ParkingManagement.Common;
+﻿using ParkingManagement.CommonLibrary;
 using ParkingManagement.Database.DataModels;
 using ParkingManagement.Database.Repositories;
 using ParkingManagement.Services.DataModels;
