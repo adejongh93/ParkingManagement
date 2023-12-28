@@ -1,6 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
-using Microsoft.Extensions.Configuration;
-using System.IO;
 
 [assembly: FunctionsStartup(typeof(ParkingManagement.Startup))]
 
@@ -16,10 +14,10 @@ namespace ParkingManagement
 
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
-            builder.ConfigurationBuilder
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("dbConfig.json") // TODO: Try to decouple this
-                .Build();
+            //builder.ConfigurationBuilder
+            //    .SetBasePath(Directory.GetCurrentDirectory())
+            //    .AddJsonFile("dbConfig.json") // TODO: Fix this to work on Azure
+            //    .Build();
         }
     }
 }

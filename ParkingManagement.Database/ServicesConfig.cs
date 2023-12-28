@@ -1,6 +1,5 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ParkingManagement.Database.DbContexts;
 using ParkingManagement.Database.Repositories;
@@ -14,8 +13,10 @@ namespace ParkingManagement.Database
             builder.Services.AddSingleton<IVehicleRepository, VehicleRepository>();
             builder.Services.AddSingleton<IVehicleStayRepository, VehicleStayRepository>();
 
-            var config = builder.GetContext().Configuration;
-            var dbConfig = config.GetSection("DatabaseConfig").Get<DatabaseConfig>();
+            //var config = builder.GetContext().Configuration;
+            //var dbConfig = config.GetSection("Values.DatabaseConfig").Get<DatabaseConfig>();
+
+            var dbConfig = new DatabaseConfig();
 
             switch (dbConfig.Provider)
             {
@@ -25,7 +26,7 @@ namespace ParkingManagement.Database
                     break;
                 case DatabaseProvider.SqlServer:
                     builder.Services.AddDbContext<IParkingManagementDbContext, ParkingManagementSqlServerDbContext>(
-                        options => options.UseSqlServer(dbConfig.ConnectionString), 
+                        options => options.UseSqlServer(dbConfig.ConnectionString),
                         ServiceLifetime.Singleton, ServiceLifetime.Singleton);
                     break;
             }
