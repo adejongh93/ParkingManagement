@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using ParkingManagement.Database;
 
 [assembly: FunctionsStartup(typeof(ParkingManagement.Startup))]
 
@@ -9,15 +10,7 @@ namespace ParkingManagement
         public override void Configure(IFunctionsHostBuilder builder)
         {
             Services.ServicesConfig.ConfigureServices(builder);
-            Database.ServicesConfig.ConfigureServices(builder);
-        }
-
-        public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
-        {
-            //builder.ConfigurationBuilder
-            //    .SetBasePath(Directory.GetCurrentDirectory())
-            //    .AddJsonFile("dbConfig.json") // TODO: Fix this to work on Azure
-            //    .Build();
+            ServicesConfig.ConfigureServices(builder);
         }
     }
 }
