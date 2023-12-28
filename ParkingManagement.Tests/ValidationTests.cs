@@ -1,6 +1,6 @@
 ﻿using ParkingManagement.Services.Services.Validations;
 
-namespace ParkingManagementTests
+namespace ParkingManagement.Tests
 {
     public class ValidationTests
     {

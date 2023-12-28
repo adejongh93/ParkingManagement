@@ -1,7 +1,7 @@
 using ParkingManagement.CommonLibrary;
 using ParkingManagement.Services.Providers.ParkingRatesProvider;
 
-namespace ParkingManagementTests
+namespace ParkingManagement.Tests
 {
     public class ParkingRatesProviderTests
     {
