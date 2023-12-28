@@ -1,8 +1,8 @@
 {
   "DatabaseConfig": {
     // Provider can be InMemory, SqlServer...
-    "Provider": "",
+    "Provider": "InMemory",
 
-    "ConnectionString": ""
+    "ConnectionString": "defaultConnectionString"
   }
 }
