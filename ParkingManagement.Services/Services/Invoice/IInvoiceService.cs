@@ -1,4 +1,5 @@
-﻿using ParkingManagement.Services.DataModels;
+﻿using ParkingManagement.CommonLibrary;
+using ParkingManagement.Services.DataModels;
 using ParkingManagement.Services.Services.Invoice.Models;
 
 namespace ParkingManagement.Services.Services.Invoice
@@ -9,6 +10,6 @@ namespace ParkingManagement.Services.Services.Invoice
 
         StayInvoice GenerateInvoice(InvoiceRequestData creationData);
 
-        Task<IEnumerable<StayInvoice>> GenerateInvoicesForResidentsAsync();
+        Task<IEnumerable<StayInvoice>> GenerateOverallInvoicesByVehicleTypeAsync(VehicleType vehicleType);
     }
 }

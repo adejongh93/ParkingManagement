@@ -40,13 +40,13 @@ namespace ParkingManagement.Services.Services.Invoice
             };
         }
 
-        public async Task<IEnumerable<StayInvoice>> GenerateInvoicesForResidentsAsync()
+        public async Task<IEnumerable<StayInvoice>> GenerateOverallInvoicesByVehicleTypeAsync(VehicleType vehicleType)
         {
-            var residentsLicensePlates = (await GetAllLicensePlatesFromResidents()).ToList();
+            var licensePlatesByVehicleType = vehicleProvider.GetAllLicensePlatesByVehicleTypeAsync(vehicleType).ToList();
 
-            var residentStays = await GetResidentsStays(residentsLicensePlates);
+            var stays = await GetStays(licensePlatesByVehicleType);
 
-            residentStays = residentStays.Select(stay =>
+            stays = stays.Select(stay =>
             {
                 if (!stay.StayCompleted)
                 {
@@ -55,18 +55,13 @@ namespace ParkingManagement.Services.Services.Invoice
                 return stay;
             });
 
-            return GenerateInvoices(residentStays, VehicleType.RESIDENT, true);
+            return GenerateInvoices(stays, vehicleType, true);
         }
 
-        private async Task<IEnumerable<string>> GetAllLicensePlatesFromResidents()
-            => (await vehicleProvider.GetAllAsync())
-                .Where(vehicle => vehicle.Type == VehicleType.RESIDENT)
-                .Select(vehicle => vehicle.LicensePlate);
-
-        private async Task<IEnumerable<VehicleStayDto>> GetResidentsStays(IList<string> residentsLicensePlates)
+        private async Task<IEnumerable<VehicleStayDto>> GetStays(IEnumerable<string> licensePlates)
         {
-            var stays = (await vehicleStaysProvider.GetAllAsync()).ToList();
-            return stays.Where(stay => residentsLicensePlates.Contains(stay.LicensePlate));
+            var stays = await vehicleStaysProvider.GetAllAsync();
+            return stays.Where(stay => licensePlates.Contains(stay.LicensePlate));
         }
 
         private IEnumerable<StayInvoice> GenerateInvoices(IEnumerable<VehicleStayDto> vehicleStays, VehicleType vehicleType, bool calculateAmountToPay)

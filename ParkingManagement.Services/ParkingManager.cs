@@ -55,7 +55,7 @@ namespace ParkingManagement.Services
 
         public async Task<FileContentResult> GenerateResidentsPaymentsAsync(string fileName)
         {
-            var invoices = await invoiceService.GenerateInvoicesForResidentsAsync();
+            var invoices = await invoiceService.GenerateOverallInvoicesByVehicleTypeAsync(VehicleType.RESIDENT);
             return fileManagementService.DownloadResidentsPayments(fileName, invoices);
         }
 

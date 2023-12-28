@@ -30,5 +30,8 @@ namespace ParkingManagement.Services.Providers.VehiclesProvider
 
         public async Task<VehicleType> GetVehicleTypeAsync(string licensePlate)
             => (await FindAsync(licensePlate)).Type;
+
+        public IEnumerable<string> GetAllLicensePlatesByVehicleTypeAsync(VehicleType vehicleType)
+            => vehicleRepository.GetAllByVehicleType(vehicleType).Select(vehicle => vehicleMapper.Map(vehicle).LicensePlate);
     }
 }

@@ -1,4 +1,5 @@
-﻿using ParkingManagement.Database.DataModels;
+﻿using ParkingManagement.CommonLibrary;
+using ParkingManagement.Database.DataModels;
 
 namespace ParkingManagement.Database.Repositories
 {
@@ -8,5 +9,7 @@ namespace ParkingManagement.Database.Repositories
         // Task<Person> GetOwnerAsync(int licensePlate);
 
         Task<bool> ExistsByLicensePlateAsync(string licensePlate);
+
+        IEnumerable<Vehicle> GetAllByVehicleType(VehicleType vehicleType);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ParkingManagement.CommonLibrary;
 using ParkingManagement.Database.DataModels;
 
 namespace ParkingManagement.Database.Repositories
@@ -38,6 +39,9 @@ namespace ParkingManagement.Database.Repositories
             dbContext.Vehicles.RemoveRange(dbContext.Vehicles);
             await SaveChangesAsync();
         }
+
+        public IEnumerable<Vehicle> GetAllByVehicleType(VehicleType vehicleType)
+            => dbContext.Vehicles.AsEnumerable().Where(vehicle => vehicle.Type == vehicleType); // TODO: Check null here
 
         public Task UpdateRangeAsync(IEnumerable<Vehicle> entities)
         {
