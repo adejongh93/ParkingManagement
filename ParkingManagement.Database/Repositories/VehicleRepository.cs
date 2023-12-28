@@ -41,7 +41,7 @@ namespace ParkingManagement.Database.Repositories
         }
 
         public IEnumerable<Vehicle> GetAllByVehicleType(VehicleType vehicleType)
-            => dbContext.Vehicles.AsEnumerable().Where(vehicle => vehicle.Type == vehicleType); // TODO: Fix it everywhere to avoid calling AsEnumerable()
+            => dbContext.Vehicles.Where(vehicle => vehicle.Type == vehicleType);
 
         public Task UpdateRangeAsync(IEnumerable<Vehicle> entities)
         {

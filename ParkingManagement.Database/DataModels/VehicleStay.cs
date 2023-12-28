@@ -12,7 +12,5 @@ namespace ParkingManagement.Database.DataModels
         public DateTime EntryTime { get; set; }
 
         public DateTime? ExitTime { get; set; }
-
-        public bool StayCompleted { get => ExitTime is not null; }
     }
 }

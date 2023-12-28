@@ -48,7 +48,7 @@ namespace ParkingManagement.Services.Services.VehicleStays
 
         public bool IsVehicleInParking(string licensePlate)
             => vehicleStayRepository.GetStaysByLicensePlate(licensePlate) // the vehicle is in the parking if and only if EXACTLY ONE of its stays is not completed
-                .Where(stay => !stay.StayCompleted)
+                .Where(stay => stay.ExitTime == null)
                 .Count() == 1; // TODO: Improve this
 
         public VehicleStayDto? GetVehicleNotCompletedStay(string licensePlate)

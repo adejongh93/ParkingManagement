@@ -34,7 +34,7 @@ namespace ParkingManagement.Database.Repositories
             => await dbContext.VehiclesStay.FindAsync(id);
 
         public IEnumerable<VehicleStay> GetCompletedStays()
-            => dbContext.VehiclesStay.AsEnumerable().Where(stay => stay.StayCompleted);
+            => dbContext.VehiclesStay.Where(stay => stay.ExitTime != null);
 
         public Task<int> CountAsync()
         {
@@ -42,14 +42,14 @@ namespace ParkingManagement.Database.Repositories
         }
 
         public IEnumerable<VehicleStay> GetNotCompletedStays()
-            => dbContext.VehiclesStay.AsEnumerable().Where(stay => !stay.StayCompleted);
+            => dbContext.VehiclesStay.Where(stay => stay.ExitTime == null);
 
         public IEnumerable<VehicleStay> GetStaysByLicensePlate(string licensePlate)
             => dbContext.VehiclesStay.Where(stay => stay.LicensePlate == licensePlate);
 
         public VehicleStay? GetVehicleNotCompletedStay(string licensePlate)
-            => dbContext.VehiclesStay.AsEnumerable()
-                .FirstOrDefault(stay => stay.LicensePlate == licensePlate && !stay.StayCompleted);
+            => dbContext.VehiclesStay
+                .FirstOrDefault(stay => stay.LicensePlate == licensePlate && stay.ExitTime == null);
 
         public async Task RemoveRangeAsync(IEnumerable<string> ids)
         {
