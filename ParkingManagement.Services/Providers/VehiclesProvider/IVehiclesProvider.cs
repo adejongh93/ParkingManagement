@@ -13,6 +13,6 @@ namespace ParkingManagement.Services.Providers.VehiclesProvider
 
         Task<VehicleType> GetVehicleTypeAsync(string licensePlate);
 
-        IEnumerable<string> GetAllLicensePlatesByVehicleTypeAsync(VehicleType vehicleType);
+        IEnumerable<string> GetAllLicensePlatesByVehicleType(VehicleType vehicleType);
     }
 }
