@@ -74,8 +74,8 @@ namespace ParkingManagement
         }
 
 
-        [FunctionName("RegisterVehicleAsync")]
-        [OpenApiOperation(operationId: "RegisterVehicleAsync", tags: new[] { "Vehicles Registration" })]
+        [FunctionName("RegisterVehicle")]
+        [OpenApiOperation(operationId: "RegisterVehicle", tags: new[] { "Vehicles Registration" })]
         [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter. Correct format is LLLL-DDDD (e.g. ASDF-1234)")]
         [OpenApiParameter(name: "vehicleType", In = ParameterLocation.Query, Required = true, Type = typeof(VehicleType), Description = "The **Vehicle Type** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
@@ -139,7 +139,7 @@ namespace ParkingManagement
         [FunctionName("GetAllVehiclesInParking")]
         [OpenApiOperation(operationId: "GetAllVehiclesInParking", tags: new[] { "Labs" })]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
-        public IActionResult GetAllVehiclesInParkingAsync(
+        public IActionResult GetAllVehiclesInParking(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             var vehiclesInParking = parkingManager.GetAllVehiclesInParking();
