@@ -30,8 +30,8 @@ namespace ParkingManagement.Database.Repositories
         public async Task<IEnumerable<VehicleStay>> GetAllAsync()
             => await dbContext.VehiclesStay.ToListAsync();
 
-        public async Task<VehicleStay> FindAsync(string id)
-            => await dbContext.VehiclesStay.FindAsync(id); // TODO: Check null here
+        public async Task<VehicleStay?> FindAsync(string id)
+            => await dbContext.VehiclesStay.FindAsync(id);
 
         public IEnumerable<VehicleStay> GetCompletedStays()
             => dbContext.VehiclesStay.AsEnumerable().Where(stay => stay.StayCompleted);
@@ -47,9 +47,9 @@ namespace ParkingManagement.Database.Repositories
         public IEnumerable<VehicleStay> GetStaysByLicensePlate(string licensePlate)
             => dbContext.VehiclesStay.Where(stay => stay.LicensePlate == licensePlate);
 
-        public VehicleStay GetVehicleNotCompletedStay(string licensePlate)
+        public VehicleStay? GetVehicleNotCompletedStay(string licensePlate)
             => dbContext.VehiclesStay.AsEnumerable()
-                .FirstOrDefault(stay => stay.LicensePlate == licensePlate && !stay.StayCompleted); // TODO: Check null here
+                .FirstOrDefault(stay => stay.LicensePlate == licensePlate && !stay.StayCompleted);
 
         public async Task RemoveRangeAsync(IEnumerable<string> ids)
         {
@@ -61,8 +61,14 @@ namespace ParkingManagement.Database.Repositories
         public async Task UpdateAsync(VehicleStay vehicleStay)
         {
             var stay = await dbContext.VehiclesStay.FindAsync(vehicleStay.Id);
-            stay.EntryTime = vehicleStay.EntryTime; // TODO: Check null and key conflict here
-            stay.ExitTime = vehicleStay.ExitTime; // TODO: Check null and key conflict here
+
+            if (stay is null)
+            {
+                throw new Exception($"Could not find stay with Id {vehicleStay.Id} to be updated");
+            }
+
+            stay.EntryTime = vehicleStay.EntryTime;
+            stay.ExitTime = vehicleStay.ExitTime;
             dbContext.VehiclesStay.Update(stay); // I don't think we need to worry a lot about concurrency in this application
             await SaveChangesAsync();
         }

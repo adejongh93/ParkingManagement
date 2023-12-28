@@ -28,8 +28,8 @@ namespace ParkingManagement.Database.Repositories
         public async Task<int> CountAsync()
             => await dbContext.Vehicles.CountAsync();
 
-        public async Task<Vehicle> FindAsync(string id)
-            => await dbContext.Vehicles.FindAsync(id); // TODO: Check null here
+        public async Task<Vehicle?> FindAsync(string licensePlate)
+            => await dbContext.Vehicles.FindAsync(licensePlate);
 
         public async Task<bool> ExistsByLicensePlateAsync(string licensePlate)
             => await FindAsync(licensePlate) is not null;
@@ -41,7 +41,7 @@ namespace ParkingManagement.Database.Repositories
         }
 
         public IEnumerable<Vehicle> GetAllByVehicleType(VehicleType vehicleType)
-            => dbContext.Vehicles.AsEnumerable().Where(vehicle => vehicle.Type == vehicleType); // TODO: Check null here
+            => dbContext.Vehicles.AsEnumerable().Where(vehicle => vehicle.Type == vehicleType);
 
         public Task UpdateRangeAsync(IEnumerable<Vehicle> entities)
         {

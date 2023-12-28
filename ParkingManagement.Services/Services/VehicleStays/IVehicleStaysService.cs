@@ -16,6 +16,6 @@ namespace ParkingManagement.Services.Services.VehicleStays
 
         Task ClearAsync();
 
-        VehicleStayDto GetVehicleNotCompletedStay(string licensePlate);
+        VehicleStayDto? GetVehicleNotCompletedStay(string licensePlate);
     }
 }

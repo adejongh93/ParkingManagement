@@ -77,13 +77,24 @@ namespace ParkingManagement.Services
 
             var vehicleStay = await parkingAccessService.RegisterVehicleExitAsync(licensePlate);
 
+            if (vehicleStay.ExitTime is null)
+            {
+                throw new Exception($"Exit Time not found when registering an Exit with License Plate {licensePlate}");
+            }
+
             var vehicleType = await vehicleProvider.GetVehicleTypeAsync(licensePlate);
-            var calculateAmountToPay = parkingRatesProvider.PaysOnExit(vehicleType);
+
+            if (vehicleType is null)
+            {
+                throw new Exception($"Vehicle Type not found when registering an Exit with License Plate {licensePlate}");
+            }
+
+            var calculateAmountToPay = parkingRatesProvider.PaysOnExit((VehicleType)vehicleType);
 
             return await GenerateInvoiceAsync(licensePlate, calculateAmountToPay, new VehicleStayTimeRange()
             {
                 EntryTime = vehicleStay.EntryTime,
-                ExitTime = (DateTime)vehicleStay.ExitTime // TODO: Check null here
+                ExitTime = (DateTime)vehicleStay.ExitTime
             });
         }
 
@@ -115,7 +126,14 @@ namespace ParkingManagement.Services
 
         private async Task<StayInvoice> GenerateInvoiceAsync(string licensePlate, bool calculateAmountToPay, VehicleStayTimeRange timeRange)
         {
-            var vehicleType = (await vehicleProvider.FindAsync(licensePlate)).Type;
+            var vehicle = await vehicleProvider.FindAsync(licensePlate);
+
+            if (vehicle is null)
+            {
+                throw new Exception($"Vehicle not found with License Plate {licensePlate} when generating Invoice");
+            }
+
+            var vehicleType = vehicle.Type;
 
             return invoiceService.GenerateInvoice(new InvoiceRequestData()
             {

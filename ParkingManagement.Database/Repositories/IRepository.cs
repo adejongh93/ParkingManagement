@@ -2,7 +2,7 @@
 {
     public interface IRepository<T> : IDisposable
     {
-        Task<T> FindAsync(string id);
+        Task<T?> FindAsync(string id);
 
         Task<IEnumerable<T>> GetAllAsync(); // TODO: Pagination to improve performance
 

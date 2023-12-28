@@ -10,6 +10,6 @@ namespace ParkingManagement.Database.Repositories
 
         IEnumerable<VehicleStay> GetStaysByLicensePlate(string licensePlate);
 
-        VehicleStay GetVehicleNotCompletedStay(string licensePlate);
+        VehicleStay? GetVehicleNotCompletedStay(string licensePlate);
     }
 }

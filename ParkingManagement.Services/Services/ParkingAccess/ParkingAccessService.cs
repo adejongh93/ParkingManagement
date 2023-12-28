@@ -78,6 +78,12 @@ namespace ParkingManagement.Services.Services.ParkingAccess
         private async Task<VehicleStayDto> RegisterExitAsync(string licensePlate)
         {
             var stayToComplete = vehicleStaysService.GetVehicleNotCompletedStay(licensePlate);
+
+            if (stayToComplete is null)
+            {
+                throw new InvalidOperationException($"Not found not completed stay for license plate {licensePlate} when registering an Exit");
+            }
+
             stayToComplete.ExitTime = DateTime.UtcNow;
 
             await vehicleStaysService.UpdateAsync(stayToComplete);

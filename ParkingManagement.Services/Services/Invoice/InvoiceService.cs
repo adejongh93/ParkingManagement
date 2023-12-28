@@ -104,6 +104,6 @@ namespace ParkingManagement.Services.Services.Invoice
         }
 
         private int GetTotalMinutesInParking(IEnumerable<VehicleStayTimeRange> timeRanges)
-            => (int)Math.Ceiling(timeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes)); // TODO: Check nullable ExitTime
+            => (int)Math.Ceiling(timeRanges.Sum(timeRange => timeRange.ExitTime.Subtract(timeRange.EntryTime).TotalMinutes));
     }
 }

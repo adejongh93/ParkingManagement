@@ -22,14 +22,15 @@ namespace ParkingManagement.Services.Providers.VehiclesProvider
             => (await vehicleRepository.GetAllAsync())
             .Select(vehicle => vehicleMapper.Map(vehicle));
 
-        public async Task<VehicleDto> FindAsync(string licensePlate)
-            => vehicleMapper.Map(await vehicleRepository.FindAsync(licensePlate));
+        public async Task<VehicleDto?> FindAsync(string licensePlate)
+            => (await vehicleRepository.FindAsync(licensePlate)) is var vehicleDto && 
+            vehicleDto is not null ? vehicleMapper.Map(vehicleDto) : null;
 
         public async Task<int> CountAsync()
             => await vehicleRepository.CountAsync();
 
-        public async Task<VehicleType> GetVehicleTypeAsync(string licensePlate)
-            => (await FindAsync(licensePlate)).Type;
+        public async Task<VehicleType?> GetVehicleTypeAsync(string licensePlate)
+            => (await FindAsync(licensePlate))?.Type;
 
         public IEnumerable<string> GetAllLicensePlatesByVehicleType(VehicleType vehicleType)
             => vehicleRepository.GetAllByVehicleType(vehicleType).Select(vehicle => vehicleMapper.Map(vehicle).LicensePlate);

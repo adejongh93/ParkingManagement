@@ -51,7 +51,8 @@ namespace ParkingManagement.Services.Services.VehicleStays
                 .Where(stay => !stay.StayCompleted)
                 .Count() == 1; // TODO: Improve this
 
-        public VehicleStayDto GetVehicleNotCompletedStay(string licensePlate)
-            => vehicleStayMapper.Map(vehicleStayRepository.GetVehicleNotCompletedStay(licensePlate));
+        public VehicleStayDto? GetVehicleNotCompletedStay(string licensePlate)
+            => vehicleStayRepository.GetVehicleNotCompletedStay(licensePlate) is var vehicleStay &&
+            vehicleStay is not null ? vehicleStayMapper.Map(vehicleStay) : null;
     }
 }
