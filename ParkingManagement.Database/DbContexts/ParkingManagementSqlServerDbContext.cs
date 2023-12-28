@@ -3,7 +3,7 @@ using ParkingManagement.Database.DataModels;
 
 namespace ParkingManagement.Database.DbContexts
 {
-    public class ParkingManagementSqlServerDbContext : DbContext, IParkingManagementDbContext
+    internal class ParkingManagementSqlServerDbContext : DbContext, IParkingManagementDbContext
     {
         public DbSet<Vehicle> Vehicles { get; set; }
 
