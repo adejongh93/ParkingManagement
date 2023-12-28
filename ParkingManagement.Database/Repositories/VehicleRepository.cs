@@ -15,7 +15,7 @@ namespace ParkingManagement.Database.Repositories
 
         public async Task AddAsync(Vehicle newVehicle)
         {
-            await dbContext.Vehicles.AddAsync(newVehicle); // I don't think we need to worry a lot about concurrency in this application
+            await dbContext.Vehicles.AddAsync(newVehicle); // TODO: Check if we need to worry about concurrency
             await SaveChangesAsync();
         }
 
@@ -41,7 +41,7 @@ namespace ParkingManagement.Database.Repositories
         }
 
         public IEnumerable<Vehicle> GetAllByVehicleType(VehicleType vehicleType)
-            => dbContext.Vehicles.AsEnumerable().Where(vehicle => vehicle.Type == vehicleType);
+            => dbContext.Vehicles.AsEnumerable().Where(vehicle => vehicle.Type == vehicleType); // TODO: Fix it everywhere to avoid calling AsEnumerable()
 
         public Task UpdateRangeAsync(IEnumerable<Vehicle> entities)
         {
