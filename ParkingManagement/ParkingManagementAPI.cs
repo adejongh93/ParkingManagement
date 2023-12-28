@@ -28,7 +28,7 @@ namespace ParkingManagement
 
         [FunctionName("RegisterEntry")]
         [OpenApiOperation(operationId: "RegisterEntry", tags: new[] { "Parking Accesses" })]
-        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter. Correct format is CCCC-DDDD (e.g. ASDF-1234)")]
+        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter. Correct format is LLLL-DDDD (e.g. ASDF-1234)")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> RegisterEntryAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
@@ -50,7 +50,7 @@ namespace ParkingManagement
 
         [FunctionName("RegisterExit")]
         [OpenApiOperation(operationId: "RegisterExit", tags: new[] { "Parking Accesses" })]
-        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter. Correct format is CCCC-DDDD (e.g. ASDF-1234)")]
+        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter. Correct format is LLLL-DDDD (e.g. ASDF-1234)")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> RegisterExitAsync(
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req)
@@ -76,7 +76,7 @@ namespace ParkingManagement
 
         [FunctionName("RegisterVehicleAsync")]
         [OpenApiOperation(operationId: "RegisterVehicleAsync", tags: new[] { "Vehicles Registration" })]
-        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter. Correct format is CCCC-DDDD (e.g. ASDF-1234)")]
+        [OpenApiParameter(name: "licensePlate", In = ParameterLocation.Query, Required = true, Type = typeof(string), Description = "The **License Plate** parameter. Correct format is LLLL-DDDD (e.g. ASDF-1234)")]
         [OpenApiParameter(name: "vehicleType", In = ParameterLocation.Query, Required = true, Type = typeof(VehicleType), Description = "The **Vehicle Type** parameter")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "text/plain", bodyType: typeof(string), Description = "The OK response")]
         public async Task<IActionResult> RegisterVehicleAsync(
