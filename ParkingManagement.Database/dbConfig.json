@@ -1,0 +1,7 @@
+{
+  "DatabaseConfig": {
+    "Provider": "InMemory",
+    //"Provider": "SqlServer",
+    "ConnectionString": "Server=localhost;Database=ParkingManagement;Trusted_Connection=True;"
+  }
+}

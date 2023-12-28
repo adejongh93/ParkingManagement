@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParkingManagement.Database.DataModels;
+using ParkingManagement.Database.DbContexts;
 
 namespace ParkingManagement.Database.Repositories
 {

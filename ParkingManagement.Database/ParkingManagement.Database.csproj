@@ -16,4 +16,10 @@
 	  <ProjectReference Include="..\ParkingManagement.CommonLibrary\ParkingManagement.CommonLibrary.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Update="dbConfig.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>
