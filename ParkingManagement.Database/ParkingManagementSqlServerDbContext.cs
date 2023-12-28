@@ -14,7 +14,17 @@ namespace ParkingManagement.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("connectionString");
+            // TODO: Put the connection string in a config file
+            optionsBuilder.UseSqlServer("Server=localhost;Database=ParkingManagement;Trusted_Connection=True;");
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Vehicle>()
+                .Property(e => e.Type)
+                .HasColumnType("nvarchar(50)");
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
