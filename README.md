@@ -2,7 +2,7 @@
 
 ## TODOs:
 
-Add unit/integration tests
+Add more unit/integration tests
 
 Allow the API to receive datetimes when registering entry and exit
 
