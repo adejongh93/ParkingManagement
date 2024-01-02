@@ -2,6 +2,8 @@
 
 ## What's next:
 
+Allow the API to receive datetimes when registering entry and exit
+
 Offers for vehicles that need to access the parking several times during the month (new type of vehicle)
 
 Relation between Person and Vehicle (owner, choffer, etc.)
